@@ -1,0 +1,28 @@
+<h1><%= @user.cn %></h1>
+
+<div class="row">
+  <div class="col-md-6">
+    <h2>Ruoli</h2>
+    <div class="list-group">
+    <% @user.roles.each do |role| %>
+      <%= link_to role.name, role, class: "list-group-item list-group-item-action" %>
+    <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h2>Gruppi</h2>
+    <div class="list-group">
+    <% @user.ad_groups.each do |adg| %>
+      <%= link_to adg, adg, class: "list-group-item list-group-item-action" %>
+    <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h2>Gruppi Hpc</h2>
+    <div class="list-group">
+    <% @user.hpc_memberships.includes(:hpc_group).each do |hm| %>
+      <%= link_to hm.hpc_group, hm.hpc_group, class: "list-group-item list-group-item-action" %>
+    <% end %>
+    </div>
+  </div>
+</div>

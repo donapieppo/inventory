@@ -1,0 +1,12 @@
+it:
+  activerecord:
+    models:
+      project: Progetto
+      service: Servizio
+      hpc_group: Gruppo HPC
+    attributes:
+      project:
+        name: Nome
+      role:
+        name: Nome
+        description: Descrizone

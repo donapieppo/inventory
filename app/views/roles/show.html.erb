@@ -1,0 +1,33 @@
+<h1><%= @role %> <small>(<%= @role.os %>)</small> <%= link_to_edit "", [:edit, @role] %></h1>
+
+<div class="alert alert-primary">
+  <%= @role.description %>
+</div>
+<h2>Associato ai progetti</h2>
+
+<% @role.projects.each do |p| %>
+  <%= link_to p.name, p, class: "btn btn-success" %>
+<% end %>
+
+<div class="row my-3">
+  <div class="col-md-6">
+    <h2 class="my-2">Nodi</h2>
+    <div class="list-group">
+      <% @role.nodes.each do |node| %>
+        <%= link_to node, node, class: "list-group-item list-group-item-action" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h2 class="my-2">Gruppi</h2>
+    <div class="list-group">
+      <% @role.ad_groups.each do |adg| %>
+        <%= link_to adg, adg, class: "list-group-item list-group-item-action" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="my-5 alert alert-secondary">
+  <pre><%= raw File.open(@role.pp_file).read %></pre>
+</div>

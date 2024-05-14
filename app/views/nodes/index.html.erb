@@ -1,0 +1,10 @@
+<h1>Nodes</h1>
+
+<div class="list-group">
+  <% @nodes.each do |node| %>
+    <%= link_to node, class: "list-group-item list-group-item-actions" do %>
+      <%= node.name %> <small>(<%= node.role %>)</small 
+    <% end %>
+  <% end %>
+</div>
+

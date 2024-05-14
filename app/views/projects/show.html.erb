@@ -1,0 +1,19 @@
+<h1><%= @project.name %> <%= link_to_edit "", [:edit, @project] %></h1>
+
+<div class="alert alert-primary">
+  <%= @project.description %>
+</div>
+
+<div class="list-group my-3">
+  <h3>Elenco ruoli e nodi</h3>
+  <% @roles.each do |role| %>
+    <%= link_to role, class: "list-group-item" do %>
+      <h2><%= role.name %></h2>
+      <div class="text-secondary"><%= role.description %></div>
+      <div class="mt-1 ms-3 text-secondary">
+        <small><%= role.nodes.map(&:name).join(", ") %></small>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+

@@ -1,0 +1,6 @@
+<h1>Aggiungi utente a <%= @hpc_group %></h1>
+
+<%= simple_form_for [@hpc_group, @hpc_membership] do |f| %>
+    <%= label_tag 'email: ' %> <%= text_field_tag :upn %>
+  <%= f.submit "salva" %>
+<% end %>

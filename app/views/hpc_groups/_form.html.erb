@@ -1,0 +1,8 @@
+<%= dm_form_for hpc_group do |f| %>
+  <%= f.dm_error_notification %>  
+  <%= f.input :name %>
+  <div class="offset-sm-3">
+    <%= f.rich_text_area :description %>
+  </div>
+  <%= f.submit %>
+<% end %>

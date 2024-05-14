@@ -1,0 +1,14 @@
+<%= dm_form_for project do |f| %>
+  <%= f.dm_error_notification %>  
+  <%= f.input :name %>
+  <div class="offset-sm-3">
+    <%= f.rich_text_area :description %>
+  </div>
+
+  <% if !project.new_record? %>
+    <div class="roles-association my-4">
+      <%= f.association :roles, collection: Role.all, as: :check_boxes, label: 'Ruoli' %>
+    </div>
+  <% end %>
+  <%= f.submit %>
+<% end %>

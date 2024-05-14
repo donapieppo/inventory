@@ -1,0 +1,43 @@
+<h1><%= @node.name %></h1>
+
+<dl class="dl-horizontal">
+  <dt class="my-2">Progetti</dt>  
+  <dd>
+    <% @node.role.projects.each do |p| %>
+      <%= link_to p.name, p, class: "btn btn-success" %>
+    <% end %>
+  </dd>
+  <dt>Ruolo</dt>
+  <dd><%= link_to @node.role, @node.role %></dd>
+  <dt class="mb-3">Amm</dt>
+  <dd>
+    <% @node.role.ad_groups.each do |adg| %>
+      <%= link_to adg, adg %>
+    <% end %>
+  </dd>
+  <dt>Servizi</dt>
+  <dd>
+    <% @node.node_services.each do |service| %>
+      <strong><%= service.software %></strong> on port <%= service.port %> <br/>
+    <% end %>
+  </dd>
+
+  <% [:operatingsystem, :operatingsystemrelease, :kernelversion, :processorcount, :memorysize, :datacenter_zone].each do |att| %>
+    <dt><%= att %></dt>
+    <dd><%= @node.send(att) %>
+  <% end %>
+
+</dl>
+
+<div class="alert alert-secondary">
+  <% if File.exist?(@node.data_file) %>
+    <pre>
+      <%= raw File.open(@node.data_file).read %>
+    </pre>
+  <% else %>
+    No file <i><%= @node.data_file %></i>.
+  <% end %>
+</div>
+
+<%= link_to "http://puppet8-board.unibo.it", "http://puppet8-board.unibo.it/node/#{@node.name}", class: "btn btn-primary" %>
+

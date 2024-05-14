@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="it">
+  <%= render DmUniboCommon::HeaderComponent.new %>
+  <body>
+    <%= render partial: 'layouts/menu' %>
+
+    <main role="main" class="container">
+      <%= render DmUniboCommon::PrivacyAlertComponent.new(cookies) %>  
+      <%= render DmUniboCommon::BootstrapAlertComponent.new(flash) %>  
+      <%= turbo_frame_tag "modal" %>
+      <%= yield %>
+    </main>
+    <%# <%= button_to "AZURE LOGIN", '/dm_unibo_common/auth/azure_activedirectory_v2', data: {turbo: false} %>
+  </body>
+</html>

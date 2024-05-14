@@ -1,0 +1,6 @@
+<h1>Aggiunta nuovo utente da AD</h1>
+
+<%= simple_form_for @user do |u| %>
+  <%= u.input :upn %>
+  <%= u.submit %>
+<% end %>

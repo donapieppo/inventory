@@ -1,0 +1,13 @@
+<h1>Utenti</h1>
+
+<div class="my-2 text-end">
+  <%= link_to "Nuovo Utente", new_user_path, class: "btn btn-primary" %>
+</div>
+
+<div class="list-group">
+  <% @users.each do |user| %>
+    <%= link_to user, class: "list-group-item list-group-item-action" do %>
+      <%= user %> <small>(<%= user.upn %>)</small>
+    <% end %>
+  <% end %>
+</div>

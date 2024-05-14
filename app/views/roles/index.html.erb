@@ -1,0 +1,11 @@
+<h1>Roles</h1>
+
+<div class="list-group">
+  <% @roles.each do |role| %>
+    <%= link_to role, class: "list-group-item list-group-item-actions" do %>
+      <%= role.name %>
+    <% end %>
+  <% end %>
+</div>
+
+

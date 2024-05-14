@@ -1,0 +1,10 @@
+<h1>Gruppi in AD</h1>
+
+<div class="list-group">
+  <% @ad_groups.each do |adg| %>
+    <%= link_to adg, class: "list-group-item list-group-item-action" do %>
+      <%= adg %> <br/>
+      <small class="text-muted">(<%= adg.users.map(&:upn).join(', ') %>)</small>
+    <% end %>
+  <% end %>
+</div>

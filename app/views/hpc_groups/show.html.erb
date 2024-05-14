@@ -1,0 +1,17 @@
+<h1><%= @hpc_group %> <%= link_to_edit "", [:edit, @hpc_group] %></h1>
+
+<div class="alert alert-primary">
+  <%= @hpc_group.description %>
+</div>
+
+<h2>Lista abilitati</h2>
+
+<div class="text-end my-2">
+  <%= link_to "Aggiungi nuovo utente", new_hpc_group_hpc_membership_path(@hpc_group), class: "btn btn-primary" %>
+</div>
+
+<ul>
+  <% @hpc_group.hpc_memberships.includes(:user).order("users.name").each do |hm| %>
+    <li><%= link_to hm.user, hm.user %> <small>(<%= hm.user.upn %>)</small></li>
+  <% end %>
+</ul>

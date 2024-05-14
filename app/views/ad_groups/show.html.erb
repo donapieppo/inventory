@@ -1,0 +1,20 @@
+<h1><%= @ad_group %></h1>
+
+<div class="row">
+  <div class="col-md-6">
+    <h2>Ruoli</h2>
+    <div class="list-group">
+    <% @ad_group.roles.each do |role| %>
+      <%= link_to role.name, role, class: "list-group-item list-group-item-action" %>
+    <% end %>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h2>Utenti</h2>
+    <div class="list-group">
+    <% @ad_group.users.each do |u| %>
+      <%= link_to u.upn, u, class: "list-group-item list-group-item-action" %>
+    <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<h1>Gruppi HPC</h1>
+
+<div class="my-2 text-end">
+  <%= link_to "Nuovo Gruppo", new_hpc_group_path, class: "btn btn-primary" %>
+</div>
+
+<div class="list-group">
+  <% @hpc_groups.each do |g| %>
+    <%= link_to g, class: "list-group-item list-group-item-action" do %>
+      <%= g %> <br/>
+      <small><%= g.description %></small>
+    <% end %>
+  <% end %>
+</div>
+
