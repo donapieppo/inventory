@@ -329,7 +329,7 @@ dir-glob@^3.0.1:
 
 dm_unibo_common@donapieppo/dm_unibo_common.git#master:
   version "0.1.0"
-  resolved "https://codeload.github.com/donapieppo/dm_unibo_common/tar.gz/3a686758c6548e2bb3212c8ac6bdde9f6f6db793"
+  resolved "https://codeload.github.com/donapieppo/dm_unibo_common/tar.gz/561e7d81f3e15d2f0b21deae20b9506df2e4f904"
   dependencies:
     "@fortawesome/fontawesome-free" "^6.4.0"
     "@hotwired/stimulus" "^3.2.2"
