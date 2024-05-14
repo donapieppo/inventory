@@ -7,7 +7,6 @@ require "json"
 # curl -X GET  http://puppet8-board.unibo.it:8080/pdb/query/v4/fact-contents --data-urlencode 'query=["and", ["=", "certname", "lcst-ondemand-01.personale.dir.unibo.it"], ["=", "environment", "hpc"]]
 # ma ritorna un array di facts meno facile da parsare
 # https://www.puppet.com/docs/puppetdb/7/api/query/v4/nodes.html
-PUPPET_FACTS_URI = "http://puppet8-board.unibo.it:8080/pdb/query/v4/facts"
 # PUPPET_URI = "http://puppet8-board.unibo.it:8080/pdb/query/v4/environments/hpc/facts"
 
 namespace :inventory do

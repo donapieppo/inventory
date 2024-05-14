@@ -7,6 +7,6 @@ class Node < ApplicationRecord
   end
 
   def data_file
-    "/home/dona/puppet-control-repo/data/nodes/#{name}.yaml"
+    PUPPET_REPO_DIR + "/data/nodes/#{name}.yaml"
   end
 end

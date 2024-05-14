@@ -4,7 +4,7 @@ namespace :inventory do
   namespace :puppet do
     desc "Read nodes from site.pp"
     task read_site: :environment do
-      File.readlines(Rails.configuration.puppet_base_dir + "/manifests/site.pp")
+      File.readlines(PUPPET_REPO_DIR + "/manifests/site.pp")
         .map { |line| line.strip }
         .select { |line| !line.empty? && line[0] != "#" }
         .join

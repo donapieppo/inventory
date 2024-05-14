@@ -1,6 +1,6 @@
 require "yaml"
 
-PUPPET_ROLES_DIR = "/home/dona/puppet-control-repo/data/roles"
+PUPPET_ROLES_DIR = PUPPET_REPO_DIR + "/data/roles"
 
 namespace :inventory do
   namespace :puppet do
