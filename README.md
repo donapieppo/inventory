@@ -1,0 +1,2 @@
+# inventory
+Testing rails7 
