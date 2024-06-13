@@ -49,12 +49,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "ad_groups", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "ad_groups", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name"
     t.index ["name"], name: "index_name_on_ad_groups"
   end
 
-  create_table "ad_groups_roles", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "ad_groups_roles", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "ad_group_id", null: false, unsigned: true
     t.integer "role_id", null: false, unsigned: true
     t.text "notes"
@@ -62,7 +62,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.index ["role_id"], name: "fk_roles_ad_groups_roles"
   end
 
-  create_table "ad_groups_users", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "ad_groups_users", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "ad_group_id", null: false, unsigned: true
     t.integer "user_id", null: false, unsigned: true
     t.text "notes"
@@ -70,7 +70,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.index ["user_id"], name: "fk_users_ad_groups_users"
   end
 
-  create_table "nodes", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "node_services", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "node_id", null: false, unsigned: true
+    t.integer "software_id", null: false, unsigned: true
+    t.integer "port"
+    t.index ["node_id"], name: "fk_nodes_node_services"
+    t.index ["software_id"], name: "fk_softwares_node_services"
+  end
+
+  create_table "nodes", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "notes"
     t.integer "role_id", unsigned: true
@@ -85,40 +93,29 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.index ["role_id"], name: "fk_roles_id"
   end
 
-  create_table "nodes_services", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.integer "node_id", null: false, unsigned: true
-    t.integer "service_id", null: false, unsigned: true
-    t.text "notes"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-    t.datetime "confirmed_at", precision: nil
-    t.index ["node_id"], name: "fk_node_nodes_services"
-    t.index ["service_id"], name: "fk_service_nodes_services"
-  end
-
-  create_table "nodes_users", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.integer "user_id", null: false, unsigned: true
-    t.integer "node_id", null: false, unsigned: true
-    t.text "notes"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-    t.datetime "confirmed_at", precision: nil
-    t.index ["node_id"], name: "fk_node_nodes_users"
-    t.index ["user_id"], name: "fk_user_nodes_users"
-  end
-
   create_table "organizations", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "code", limit: 250
     t.string "name"
     t.string "description"
   end
 
-  create_table "projects", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "permissions", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "user_id", unsigned: true
+    t.integer "organization_id", unsigned: true
+    t.string "network", limit: 20
+    t.integer "authlevel", unsigned: true
+    t.datetime "updated_at", precision: nil
+    t.datetime "created_at", precision: nil
+    t.index ["organization_id"], name: "fk_organization_permission"
+    t.index ["user_id"], name: "fk_user_permission"
+  end
+
+  create_table "projects", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
   end
 
-  create_table "projects_roles", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "projects_roles", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "project_id", null: false, unsigned: true
     t.integer "role_id", null: false, unsigned: true
     t.text "notes"
@@ -126,23 +123,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.index ["role_id"], name: "fk_roles_projects_roles"
   end
 
-  create_table "projects_services", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.integer "project_id", null: false, unsigned: true
-    t.integer "service_id", null: false, unsigned: true
-    t.text "notes"
-    t.index ["project_id"], name: "fk_project_projects_services"
-    t.index ["service_id"], name: "fk_service_projects_services"
-  end
-
-  create_table "roles", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "roles", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.column "os", "enum('windows','linux')"
     t.string "name", null: false
-    t.text "notes"
+    t.text "description"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "services", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "services", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
     t.text "url"
@@ -151,31 +140,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "services_users", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.integer "user_id", null: false, unsigned: true
-    t.integer "service_id", null: false, unsigned: true
-    t.text "notes"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-    t.datetime "confirmed_at", precision: nil
-    t.index ["service_id"], name: "fk_service_services_users"
-    t.index ["user_id"], name: "fk_user_services_users"
-  end
-
-  create_table "softwares", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "softwares", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "notes"
   end
 
-  create_table "softwares_nodes", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.integer "software_id", null: false, unsigned: true
-    t.integer "node_id", null: false, unsigned: true
-    t.integer "port"
-    t.index ["node_id"], name: "fk_nodes_softwares_nodes"
-    t.index ["software_id"], name: "fk_softwares_softwares_nodes"
-  end
-
-  create_table "users", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "users", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "upn", null: false
     t.string "name"
     t.string "surname"
@@ -190,17 +160,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
   add_foreign_key "ad_groups_roles", "roles", name: "fk_roles_ad_groups_roles", on_delete: :cascade
   add_foreign_key "ad_groups_users", "ad_groups", name: "fk_ad_group_ad_groups_users", on_delete: :cascade
   add_foreign_key "ad_groups_users", "users", name: "fk_users_ad_groups_users", on_delete: :cascade
+  add_foreign_key "node_services", "nodes", name: "fk_nodes_node_services", on_delete: :cascade
+  add_foreign_key "node_services", "softwares", name: "fk_softwares_node_services", on_delete: :cascade
   add_foreign_key "nodes", "roles", name: "fk_roles_id", on_delete: :cascade
-  add_foreign_key "nodes_services", "nodes", name: "fk_node_nodes_services", on_delete: :cascade
-  add_foreign_key "nodes_services", "services", name: "fk_service_nodes_services", on_delete: :cascade
-  add_foreign_key "nodes_users", "nodes", name: "fk_node_nodes_users", on_delete: :cascade
-  add_foreign_key "nodes_users", "users", name: "fk_user_nodes_users", on_delete: :cascade
+  add_foreign_key "permissions", "organizations", name: "fk_organization_permission"
+  add_foreign_key "permissions", "users", name: "fk_user_permission"
   add_foreign_key "projects_roles", "projects", name: "fk_project_projects_roles", on_delete: :cascade
   add_foreign_key "projects_roles", "roles", name: "fk_roles_projects_roles", on_delete: :cascade
-  add_foreign_key "projects_services", "projects", name: "fk_project_projects_services", on_delete: :cascade
-  add_foreign_key "projects_services", "services", name: "fk_service_projects_services", on_delete: :cascade
-  add_foreign_key "services_users", "services", name: "fk_service_services_users", on_delete: :cascade
-  add_foreign_key "services_users", "users", name: "fk_user_services_users", on_delete: :cascade
-  add_foreign_key "softwares_nodes", "nodes", name: "fk_nodes_softwares_nodes", on_delete: :cascade
-  add_foreign_key "softwares_nodes", "softwares", name: "fk_softwares_softwares_nodes", on_delete: :cascade
 end

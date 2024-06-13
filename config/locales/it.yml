@@ -3,10 +3,12 @@ it:
     models:
       project: Progetto
       service: Servizio
-      hpc_group: Gruppo HPC
+      node: Nodo
     attributes:
       project:
         name: Nome
       role:
         name: Nome
         description: Descrizone
+      node:
+        notes: Note

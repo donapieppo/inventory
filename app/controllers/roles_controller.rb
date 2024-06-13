@@ -1,7 +1,8 @@
 class RolesController < ApplicationController
-  before_action :get_role_and_check_permission, only: [:show, :edit, :update]
+  before_action :get_role_and_authorize, only: [:show, :edit, :update]
 
   def index
+    authorize :role
     @roles = Role.order(:name)
   end
 
@@ -21,8 +22,9 @@ class RolesController < ApplicationController
 
   private
 
-  def get_role_and_check_permission
+  def get_role_and_authorize
     @role = Role.includes(:nodes).find(params[:id])
+    authorize @role
   end
 
   def role_params

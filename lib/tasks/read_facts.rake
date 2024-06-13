@@ -7,17 +7,16 @@ require "json"
 # curl -X GET  http://puppet8-board.unibo.it:8080/pdb/query/v4/fact-contents --data-urlencode 'query=["and", ["=", "certname", "lcst-ondemand-01.personale.dir.unibo.it"], ["=", "environment", "hpc"]]
 # ma ritorna un array di facts meno facile da parsare
 # https://www.puppet.com/docs/puppetdb/7/api/query/v4/nodes.html
-# PUPPET_URI = "http://puppet8-board.unibo.it:8080/pdb/query/v4/environments/hpc/facts"
 
 namespace :inventory do
   namespace :puppet do
     desc "Read node from puppet board"
-    task read_node: :environment do
-      uri = URI.parse(PUPPET_FACTS_URI)
+    task read_facts: :environment do
+      uri = URI.parse(Rails.configuration.puppet_facts_uri)
       headers = {Accept: "application/json", "Content-Type": "application/json"}
 
       Node.where("name like '%ondemand%'").each do |node|
-      # Node.where("kernelversion is NULL").each do |node|
+        # Node.where("kernelversion is NULL").each do |node|
         http = Net::HTTP.new(uri.host, uri.port)
         request = Net::HTTP::Post.new(uri.path, headers)
 

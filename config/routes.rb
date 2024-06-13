@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "projects#index"
+  get "/home", to: "home#index", as: "home"
 
   scope ":__org__" do
     resources :users
@@ -18,9 +19,6 @@ Rails.application.routes.draw do
     resources :projects
     resources :softwares
     resources :roles
-    resources :hpc_groups do
-      resources :hpc_memberships
-    end
 
     get "/", to: "projects#index", as: "current_organization_root"
   end

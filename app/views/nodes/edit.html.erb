@@ -1,10 +1,4 @@
-<h1>Editing node</h1>
-
-<%= render "form", node: @node %>
-
-<br>
-
-<div>
-  <%= link_to "Show this node", @node %> |
-  <%= link_to "Back to nodes", nodes_path %>
-</div>
+<%= dm_form_for @node do |f| %>
+  <%= f.input :notes %>
+  <%= f.submit %>
+<% end %>

@@ -7,6 +7,6 @@ class Node < ApplicationRecord
   end
 
   def data_file
-    PUPPET_REPO_DIR + "/data/nodes/#{name}.yaml"
+    Rails.configuration.puppet_repo_dir + "/data/nodes/#{name}.yaml"
   end
 end

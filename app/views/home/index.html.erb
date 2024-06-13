@@ -1,0 +1,23 @@
+<h1 class="h1">
+  Cesia Inventory<br/>
+  <small>Applicazione per ...</small>
+</h1>
+
+<% if !current_user %>
+  <div class="text-center my-3">
+    <h3 class="my-3">Per accedere usare le credenziali Unibo</h3>
+    <% if Rails.env.development? && Rails.configuration.dm_unibo_common[:omniauth_provider] == :developer %>
+      <%= form_with url: "/dm_unibo_common/auth/developer", data: {turbo: false} do |f| %> 
+        <%= f.button dm_icon('sign-in', text: " Developer login", size: :lg), class: "btn btn-primary" %> 
+      <% end %>
+    <% elsif Rails.env.production? && Rails.configuration.dm_unibo_common[:omniauth_provider] == :azure_activedirectory_v2 %>
+      <%= form_with url: "/dm_unibo_common/auth/azure_activedirectory_v2", data: {turbo: false} do |f| %> 
+        <%= f.button dm_icon('sign-in', text: " Unibo login", size: :lg), class: "btn btn-primary" %> 
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="alert alert-light my-3">
+  <%= Rails.configuration.home_description %>
+</div>

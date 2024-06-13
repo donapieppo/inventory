@@ -2,17 +2,18 @@ source "https://rubygems.org"
 # git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem "dm_unibo_user_search", git: "https://github.com/donapieppo/dm_unibo_user_search.git"
-gem "dm_unibo_common", git: "https://github.com/donapieppo/dm_unibo_common.git", branch: "master"
-# gem "dm_unibo_common", path: "/home/rails/gems/dm_unibo_common/"
+# gem "dm_unibo_common", git: "https://github.com/donapieppo/dm_unibo_common.git", branch: "master"
+gem "dm_unibo_common", path: "/home/rails/gems/dm_unibo_common/"
 
 gem "jsbundling-rails"
 gem "cssbundling-rails"
+gem "sprockets-rails"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-gem "image_processing", "~> 1.2"
+# gem "image_processing", "~> 1.2"
 
 gem "omniauth"
 gem "omniauth-rails_csrf_protection"

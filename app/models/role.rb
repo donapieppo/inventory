@@ -10,6 +10,6 @@ class Role < ApplicationRecord
   end
 
   def pp_file
-    PUPPET_REPO_DIR + "/site/role/manifests/#{os}/#{name}.pp"
+    Rails.configuration.puppet_repo_dir + "/site/role/manifests/#{os}/#{name}.pp"
   end
 end

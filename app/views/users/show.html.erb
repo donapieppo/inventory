@@ -17,12 +17,4 @@
     <% end %>
     </div>
   </div>
-  <div class="col-md-6">
-    <h2>Gruppi Hpc</h2>
-    <div class="list-group">
-    <% @user.hpc_memberships.includes(:hpc_group).each do |hm| %>
-      <%= link_to hm.hpc_group, hm.hpc_group, class: "list-group-item list-group-item-action" %>
-    <% end %>
-    </div>
-  </div>
 </div>
