@@ -72,10 +72,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
 
   create_table "node_ips", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "node_id", null: false, unsigned: true
-    t.string "address", null: false
+    t.string "ip"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-    t.index ["address"], name: "address"
+    t.index ["ip"], name: "address"
     t.index ["node_id"], name: "fk_node_ips"
   end
 
@@ -163,6 +163,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.index ["upn"], name: "index_upn_on_users"
   end
 
+  create_table "web_site_addresses", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "web_site_id", null: false, unsigned: true
+    t.string "ip", null: false
+    t.integer "port", unsigned: true
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.index ["ip"], name: "web_sites_addresses_ip"
+    t.index ["web_site_id"], name: "fk_web_sites"
+  end
+
+  create_table "web_sites", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.text "name"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.index ["name"], name: "name", unique: true, using: :hash
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "ad_groups_roles", "ad_groups", name: "fk_ad_group_ad_groups_roles", on_delete: :cascade
@@ -177,4 +194,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
   add_foreign_key "permissions", "users", name: "fk_user_permission"
   add_foreign_key "projects_roles", "projects", name: "fk_project_projects_roles", on_delete: :cascade
   add_foreign_key "projects_roles", "roles", name: "fk_roles_projects_roles", on_delete: :cascade
+  add_foreign_key "web_site_addresses", "web_sites", name: "fk_web_sites"
 end
