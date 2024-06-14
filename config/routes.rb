@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :projects
     resources :softwares
     resources :roles
+    resources :web_sites
 
     get "/", to: "projects#index", as: "current_organization_root"
   end
