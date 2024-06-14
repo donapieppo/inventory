@@ -70,6 +70,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.index ["user_id"], name: "fk_users_ad_groups_users"
   end
 
+  create_table "node_ips", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "node_id", null: false, unsigned: true
+    t.string "address", null: false
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.index ["address"], name: "address"
+    t.index ["node_id"], name: "fk_node_ips"
+  end
+
   create_table "node_services", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "node_id", null: false, unsigned: true
     t.integer "software_id", null: false, unsigned: true
@@ -160,6 +169,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
   add_foreign_key "ad_groups_roles", "roles", name: "fk_roles_ad_groups_roles", on_delete: :cascade
   add_foreign_key "ad_groups_users", "ad_groups", name: "fk_ad_group_ad_groups_users", on_delete: :cascade
   add_foreign_key "ad_groups_users", "users", name: "fk_users_ad_groups_users", on_delete: :cascade
+  add_foreign_key "node_ips", "nodes", name: "fk_node_ips"
   add_foreign_key "node_services", "nodes", name: "fk_nodes_node_services", on_delete: :cascade
   add_foreign_key "node_services", "softwares", name: "fk_softwares_node_services", on_delete: :cascade
   add_foreign_key "nodes", "roles", name: "fk_roles_id", on_delete: :cascade
