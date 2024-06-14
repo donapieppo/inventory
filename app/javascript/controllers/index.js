@@ -4,5 +4,6 @@
 
 import { application } from "./application"
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import { TurboModalController, LimitVisibleController } from "dm_unibo_common"
+application.register("turbo-modal", TurboModalController)
+application.register("limit-visible", LimitVisibleController)
