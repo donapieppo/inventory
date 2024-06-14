@@ -1,8 +1,9 @@
-<h1><%= @web_site.name %></h1>
 
-<%= link_to @web_site.name, "https://#{@web_site.name}" %>
+<h1 class="text-center display-6">
+  <%= link_to dm_icon("link", text: @web_site.name), "https://#{@web_site.name}" %>
+</h1>
 
-<h2>Indirizzi e nodi</h2>
+<h2>Nodi</h2>
 
 <ul>
   <% @web_site.web_site_addresses.each do |address| %>

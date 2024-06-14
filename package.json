@@ -2,9 +2,8 @@
   "name": "app",
   "private": "true",
   "dependencies": {
-    "@rails/actiontext": "^7.1.3-2",
-    "dm_unibo_common": "donapieppo/dm_unibo_common.git#master",
-    "trix": "^2.1.0"
+    "@rails/actiontext": "^7.1.3-4",
+    "dm_unibo_common": "donapieppo/dm_unibo_common.git#master"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",

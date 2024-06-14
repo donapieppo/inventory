@@ -1,7 +1,7 @@
 <h1>Modifica <i><%= @role %></i></h1>
 
 <div class="my-5 alert alert-secondary">
-  <pre><%= raw File.open(@role.pp_file).read %></pre>
+  <pre><%= raw @role.pp_content %></pre>
 </div>
 
 <%= simple_form_for @role do |f| %>
