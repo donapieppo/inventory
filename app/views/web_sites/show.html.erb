@@ -1,12 +1,16 @@
 <h1><%= @web_site.name %></h1>
 
+<%= link_to @web_site.name, "https://#{@web_site.name}" %>
+
+<h2>Indirizzi e nodi</h2>
+
 <ul>
   <% @web_site.web_site_addresses.each do |address| %>
     <li>
-      <%= address.ip %>:<%= address.port %>
       <% if node_ip = NodeIp.where(ip: address.ip).first %>
         <%= link_to node_ip.node %>
       <% end %>
+      (<%= address.ip %>:<%= address.port %>)
     </li>
   <% end %>
 </ul>
