@@ -15,4 +15,8 @@ class Node < ApplicationRecord
     n = node_ips.find_or_create_by!(ip: ip)
     n.update(updated_at: Time.now) unless n.new_record?
   end
+
+  def web_sites
+    WebSiteAddress.where(ip: node_ips.map(&:ip)).map { |w| w.web_site }
+  end
 end
