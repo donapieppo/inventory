@@ -15,13 +15,13 @@ namespace :inventory do
       uri = URI.parse(Rails.configuration.puppet_facts_uri)
       headers = {Accept: "application/json", "Content-Type": "application/json"}
 
-      Node.where("name like '%ondemand%'").each do |node|
-        # Node.where("kernelversion is NULL").each do |node|
+      # Node.where("name like '%hpc%' or name like '%ondema%'").each do |node|
+      Node.where("kernelversion is NULL").each do |node|
         http = Net::HTTP.new(uri.host, uri.port)
         request = Net::HTTP::Post.new(uri.path, headers)
 
-        # q = %(["=", "certname", "#{node.name}"])
-        q = %(["and", ["=", "certname", "#{node.name}"], ["=", "environment", "hpc"]])
+        q = %(["=", "certname", "#{node.name}"])
+        # q = %(["and", ["=", "certname", "#{node.name}"], ["=", "environment", "hpc"]])
         request.body = {query: q}.to_json
 
         response = http.request(request)
@@ -42,12 +42,11 @@ namespace :inventory do
           facts["memory"]["system"]["total"].split(".")[0]
         end
 
-        ips = []
         facts["networking"]["interfaces"].each do |interface, values|
           next if interface == "lo"
-          ips << values["ip"]
+          next if values["ip"].blank?
+          node.update_ip_association(values["ip"])
         end
-        p ips
 
         File.write("/tmp/facts.yml", facts.to_s)
 
