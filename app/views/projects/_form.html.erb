@@ -7,7 +7,7 @@
 
   <% if !project.new_record? %>
     <div class="roles-association my-4">
-      <%= f.association :roles, collection: Role.all, as: :check_boxes, label: 'Ruoli' %>
+      <%= f.association :roles, collection: Role.order(:name).all, as: :check_boxes, label: 'Ruoli' %>
     </div>
   <% end %>
   <%= f.submit %>

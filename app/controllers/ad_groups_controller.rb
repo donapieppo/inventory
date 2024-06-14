@@ -1,6 +1,6 @@
 class AdGroupsController < ApplicationController
   def index
-    authorize :ad_groups
+    authorize :ad_group
     @ad_groups = AdGroup.includes([:roles, :users]).order(:name)
   end
 

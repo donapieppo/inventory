@@ -1,5 +1,9 @@
 <h1><%= @node.name %> <%= link_to_edit "", [:edit, @node] %></h1>
 
+<% unless @node.notes.blank? %>
+  <div class="info"><%= @node.notes %></div>
+<% end %>
+
 <dl class="dl-horizontal">
   <dt class="my-2">Progetti</dt>  
   <dd>
@@ -19,6 +23,12 @@
   <dd>
     <% @node.node_services.each do |service| %>
       <strong><%= service.software %></strong> on port <%= service.port %> <br/>
+    <% end %>
+  </dd>
+  <dt>IP</dt>
+  <dd>
+    <% @node.node_ips.each do |node_ip| %>
+      <strong><%= node_ip.ip %></strong> <br/>
     <% end %>
   </dd>
 

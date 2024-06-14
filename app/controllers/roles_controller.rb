@@ -7,6 +7,7 @@ class RolesController < ApplicationController
   end
 
   def show
+    @projects = @role.projects.order(:name).all
   end
 
   def edit

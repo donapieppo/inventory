@@ -12,4 +12,20 @@ class Role < ApplicationRecord
   def pp_file
     Rails.configuration.puppet_repo_dir + "/site/role/manifests/#{os}/#{name}.pp"
   end
+
+  def yaml_file
+    Rails.configuration.puppet_repo_dir + "/data/roles/#{name}.yaml"
+  end
+
+  def pp_content
+    if File.exist?(pp_file)
+      File.read(pp_file)
+    end
+  end
+
+  def yaml_content
+    if File.exist?(yaml_file)
+      File.read(yaml_file)
+    end
+  end
 end

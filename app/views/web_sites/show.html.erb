@@ -1,0 +1,12 @@
+<h1><%= @web_site.name %></h1>
+
+<ul>
+  <% @web_site.web_site_addresses.each do |address| %>
+    <li>
+      <%= address.ip %>:<%= address.port %>
+      <% if node_ip = NodeIp.where(ip: address.ip).first %>
+        <%= link_to node_ip.node %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
