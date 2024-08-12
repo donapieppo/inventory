@@ -4,11 +4,7 @@
   </div>
 
   <div class="list-group">
-    <% @list.each do |item| %>
-      <%= link_to item, class: "list-group-item list-group-item-actions", data: {"limit-visible-target" => "item", text: item.send(@method)} do %>
-        <%= item.send(@method) %>
-      <% end %>
-    <% end %>
+    <%= content %>
   </div>
 </div>
 
