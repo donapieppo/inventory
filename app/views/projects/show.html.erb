@@ -17,6 +17,7 @@
   <% end %>
 </div>
 
+<ul>
 <% @roles.each do |role| %>
   <% role.nodes.each do |node| %>
     <% node.web_sites.each do |web_site| %>
@@ -24,4 +25,4 @@
     <% end %>
   <% end %>
 <% end %>
-
+</ul>
