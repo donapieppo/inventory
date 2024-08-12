@@ -5,18 +5,19 @@ gem "dm_unibo_user_search", git: "https://github.com/donapieppo/dm_unibo_user_se
 # gem "dm_unibo_common", git: "https://github.com/donapieppo/dm_unibo_common.git", branch: "master"
 gem "dm_unibo_common", path: "/home/rails/gems/dm_unibo_common/"
 
+gem "puma"
+
 gem "jsbundling-rails"
 gem "cssbundling-rails"
 gem "sprockets-rails"
+
+gem "net-ldap"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
 gem "omniauth"
 gem "omniauth-rails_csrf_protection"
-
-gem "net-ldap"
-gem "net-ldap-auth_adapter-gssapi"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
