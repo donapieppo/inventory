@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
 
   def index
     authorize :project
-    @projects = Project.all
+    @projects = Project.order(:name).all
   end
 
   def show
