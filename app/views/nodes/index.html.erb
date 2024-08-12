@@ -1,4 +1,10 @@
 <h1>Nodes</h1>
 
-<%= render ListGroupLimitVisibleComponent.new(@nodes, placeholder: "Scrivi parte del nome del nodo") %>
+<%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome del nodo") do %>
+  <% @nodes.each do |item| %>
+    <%= link_to item, class: "list-group-item list-group-item-actions", data: {"limit-visible-target" => "item", text: item.name} do %>
+      <%= item.name %> <span class="float-end"><%= item.operatingsystem %></span>
+    <% end %>
+  <% end %>
+<% end %>
 
