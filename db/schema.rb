@@ -154,11 +154,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.text "notes"
   end
 
+  create_table "ssh_logins", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "user_id", unsigned: true
+    t.integer "node_id", unsigned: true
+    t.integer "numbers", default: 0, unsigned: true
+    t.datetime "last_login", precision: nil
+    t.index ["node_id"], name: "fk_nodes_ssh_logins"
+    t.index ["user_id"], name: "fk_user_ssh_logins"
+  end
+
   create_table "users", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "upn", null: false
     t.string "name"
     t.string "surname"
     t.string "email"
+    t.string "sam"
     t.datetime "updated_at", precision: nil
     t.index ["upn"], name: "index_upn_on_users"
   end
@@ -187,12 +197,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
   add_foreign_key "ad_groups_users", "ad_groups", name: "fk_ad_group_ad_groups_users", on_delete: :cascade
   add_foreign_key "ad_groups_users", "users", name: "fk_users_ad_groups_users", on_delete: :cascade
   add_foreign_key "node_ips", "nodes", name: "fk_node_ips"
-  add_foreign_key "node_services", "nodes", name: "fk_nodes_node_services", on_delete: :cascade
+  add_foreign_key "node_services", "nodes", name: "fk_.odes_node_services", on_delete: :cascade
   add_foreign_key "node_services", "softwares", name: "fk_softwares_node_services", on_delete: :cascade
   add_foreign_key "nodes", "roles", name: "fk_roles_id", on_delete: :cascade
   add_foreign_key "permissions", "organizations", name: "fk_organization_permission"
   add_foreign_key "permissions", "users", name: "fk_user_permission"
   add_foreign_key "projects_roles", "projects", name: "fk_project_projects_roles", on_delete: :cascade
   add_foreign_key "projects_roles", "roles", name: "fk_roles_projects_roles", on_delete: :cascade
+  add_foreign_key "ssh_logins", "nodes", name: "fk_nodes_ssh_logins", on_delete: :cascade
+  add_foreign_key "ssh_logins", "users", name: "fk_user_ssh_logins", on_delete: :cascade
   add_foreign_key "web_site_addresses", "web_sites", name: "fk_web_sites"
 end
