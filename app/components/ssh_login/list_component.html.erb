@@ -3,6 +3,6 @@
     <span class="badge badge-lg bg-info text-dark"><%= sprintf("%03d", login.numbers) %></span>
     <%= link_to(login.user, login.user) if @show == :user || @show == :all %>
     <%= link_to(login.node.to_s_short, login.node) if @show == :node || @show == :all %>
-    <small><%= l login.last_login %></small>
+    <small>last: <%= l login.last_login %></small>
   </div>
 <% end %>
