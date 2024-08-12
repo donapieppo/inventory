@@ -16,5 +16,9 @@
       <%= link_to adg, adg, class: "list-group-item list-group-item-action" %>
     <% end %>
     </div>
+    <h2 class="mt-4">Logins</h2>
+    <%= render SshLogin::ListComponent.new(@user.ssh_logins.order("numbers desc"), show: :node) %>
   </div>
 </div>
+
+
