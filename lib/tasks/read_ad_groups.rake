@@ -1,8 +1,4 @@
 require "net/ldap"
-require "net/ldap/auth_adapter/gssapi"
-
-AD_SERVER = "aki.personale.dir.unibo.it"
-TREEBASE = "dc=personale,dc=dir,dc=unibo,dc=it"
 
 def account?(entry)
   entry[:objectclass].include?("organizationalPerson")
@@ -14,7 +10,7 @@ def extract_members(ldap, cn)
   members = []
   # amm.sistemi
   filter = Net::LDAP::Filter.eq("cn", cn)
-  ldap.search(base: TREEBASE, filter: filter) do |entry|
+  ldap.search(base: Rails.configuration.ad_treebase, filter: filter) do |entry|
     if account?(entry)
       # CN=Michele Montani,OU=Sistemi,OU=Utenti-Adm,OU=CeSIA,OU=Gestione,DC=personale,DC=dir,DC=unibo,DC=it
       puts "Trovato account #{entry[:dn][0]}"
@@ -34,8 +30,16 @@ namespace :inventory do
   namespace :puppet do
     desc "Read adm_groups users"
     task read_ad_group_users: :environment do
-      ldap = Net::LDAP.new host: AD_SERVER, port: 389, auth: {method: :gssapi, hostname: AD_SERVER}
-      ldap.bind
+      ldap = Net::LDAP.new(
+        host: Rails.configuration.ad_server,
+        port: Rails.configuration.ad_server_port,
+        auth: {
+          method: :simple,
+          username: Rails.configuration.ad_username,
+          password: Rails.configuration.ad_pwd
+        },
+        encryption: :simple_tls
+      )
 
       # AdGroup.where(name: "Str81009.servizioinformatico.Grp").each do |adg|
       AdGroup.find_each do |adg|
@@ -50,6 +54,7 @@ namespace :inventory do
         # RESET
         adg.users = []
         members.each do |user|
+          p user
           upn = user[:userprincipalname][0]
           if upn
             u = User.where(upn: upn).first
@@ -58,7 +63,8 @@ namespace :inventory do
                 upn: upn,
                 name: user[:givenname][0],
                 email: upn,
-                surname: user[:sn][0]
+                surname: user[:sn][0],
+                sam: user[:samaccountname][0]
               )
             end
             adg.users << u

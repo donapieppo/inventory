@@ -2,10 +2,10 @@ require "yaml"
 
 namespace :inventory do
   namespace :puppet do
-    desc "Read nodes from site.pp"
+    desc "Read login groups from each role.yaml"
     task read_login_groups: :environment do
       Role.find_each do |role|
-        yaml_role_file = Rails.configuration.puppet_roles_dir + "/#{role.name}.yaml"
+        yaml_role_file = File.join(Rails.configuration.puppet_roles_dir, "#{role.name}.yaml")
         if File.exist?(yaml_role_file)
           role_yaml = YAML.load_file(yaml_role_file)
           next unless role_yaml

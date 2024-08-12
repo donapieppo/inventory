@@ -16,7 +16,9 @@ namespace :inventory do
       headers = {Accept: "application/json", "Content-Type": "application/json"}
 
       # Node.where("name like '%hpc%' or name like '%ondema%'").each do |node|
-      Node.where("kernelversion is NULL").each do |node|
+      # Node.where("kernelversion is NULL").each do |node|
+      Node.find_each do |node|
+        p node
         http = Net::HTTP.new(uri.host, uri.port)
         request = Net::HTTP::Post.new(uri.path, headers)
 
@@ -31,8 +33,8 @@ namespace :inventory do
 
         facts = {}
         json_response.each do |fact|
-          p fact["name"]
-          p fact["value"]
+          # p fact["name"]
+          # p fact["value"]
           facts[fact["name"]] = fact["value"]
         end
 
@@ -59,16 +61,24 @@ namespace :inventory do
           datacenter_zone: facts["datacenter_zone"]
         )
 
-        if facts.key?("open_ports")
-          # [{"p"=>"6817", "s"=>"slurmctld"}, {"p"=>"6819", "s"=>"slurmdbd"}, {"p"=>"25", "s"=>"master"}, {"p"=>"22", "s"=>"sshd"}, {"p"=>"111", "s"=>"rpcbind"}]
-          facts["open_ports"].each do |service|
-            if (s = Software.find_by(name: service["s"]))
-              NodeService.find_or_create_by!(node: node, software: s, port: service["p"])
+        node.node_services.destroy_all
+
+        if facts.key?("cesia_services") && facts["cesia_services"].is_a?(Hash)
+          # { "sshd": [22], "postgres": [5432], .... }
+          facts["cesia_services"].each do |service, ports|
+            p service
+            # if (software = Software.find_by(name: service))
+            if (software = Software.find_or_create_by(name: service))
+              ports.each do |port|
+                NodeService.find_or_create_by!(node: node, software: software, port: port)
+              end
+            else
+              p "MANCA SOFTWARE ${service}"
             end
           end
         end
 
-        sleep 3
+        sleep 2
       end
     end
   end

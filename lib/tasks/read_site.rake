@@ -1,10 +1,11 @@
-role_reg = Regexp.new 'custom_role\s+=\s+.(.+).include.*(windows|linux)'
-
 namespace :inventory do
   namespace :puppet do
-    desc "Read nodes from site.pp"
+    desc "Read roles and nodes from site.pp"
     task read_site: :environment do
-      File.readlines(Rails.configuration.puppet_repo_dir + "/manifests/site.pp")
+      role_reg = Regexp.new 'custom_role\s+=\s+.(.+).include.*(windows|linux)'
+      site_pp = File.join(Rails.configuration.puppet_repo_dir, "manifests", "site.pp") 
+
+      File.readlines(site_pp)
         .map { |line| line.strip }
         .select { |line| !line.empty? && line[0] != "#" }
         .join
@@ -18,9 +19,10 @@ namespace :inventory do
         role = role_reg.match(roles)
 
         if role
-          r = Role.create!(name: role[1], os: role[2])
+          r = Role.create_with(os: role[2]).find_or_create_by!(name: role[1])
           nodes.each do |node|
-            Node.create(role_id: r.id, name: node.delete("'").delete('"').strip)
+            node_name = node.delete("'").delete('"').strip
+            Node.create_with(role_id: r.id).find_or_create_by!(name: node_name)
           end
           puts r.name
         end

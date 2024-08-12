@@ -6,7 +6,7 @@ namespace :inventory do
     task read_nginx: :environment do
       ip_regexp = /^(\d{1,3}\.){3}\d{1,3}$/
 
-      yaml_file = Rails.configuration.puppet_roles_dir + "/nginx_fe.yaml"
+      yaml_file = File.join(Rails.configuration.puppet_roles_dir, "nginx_fe.yaml")
       conf = YAML.load_file(yaml_file)
 
       if conf.key? "profile::nginxplus::sites"
