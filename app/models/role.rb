@@ -5,6 +5,8 @@ class Role < ApplicationRecord
 
   has_rich_text :description
 
+  validates :name, uniqueness: true
+
   def to_s
     name
   end

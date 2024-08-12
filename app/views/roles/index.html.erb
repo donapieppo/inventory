@@ -1,4 +1,11 @@
 <h1>Ruoli</h1>
 
-<%= render ListGroupLimitVisibleComponent.new(@roles, placeholder: "Scrivi parte del nome del ruolo") %>
+<%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome del ruolo") do %>
+  <% @roles.each do |item| %>
+    <%= link_to item, class: "list-group-item list-group-item-actions", data: {"limit-visible-target" => "item", text: item.name} do %>
+      <%= item.name %>
+      <div class="d-inline float-end small"><%= item.projects.map(&:name).join(", ") %></div>
+    <% end %>
+  <% end %>
+<% end %>
 

@@ -1,13 +1,12 @@
 class RolesController < ApplicationController
-  before_action :get_role_and_authorize, only: [:show, :edit, :update]
+  before_action :get_role_and_authorize, only: [:show, :edit, :update, :choose_project, :set_projects]
 
   def index
     authorize :role
-    @roles = Role.order(:name)
+    @roles = Role.includes(:projects).order(:name)
   end
 
   def show
-    @projects = @role.projects.order(:name).all
   end
 
   def edit
@@ -19,6 +18,14 @@ class RolesController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def choose_project
+  end
+
+  def set_projects
+    @role.project_ids = params[:role][:project_ids]
+    @role.save
   end
 
   private

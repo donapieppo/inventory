@@ -4,15 +4,9 @@
   <%= @role.description %>
 </div>
 
-<% if @projects.any? %>
-  <h2>Ruolo associato ai seguenti progetti</h2>
-
-<% @role.projects.each do |p| %>
-  <%= link_to p.name, p, class: "btn btn-success" %>
-<% end %>
-<% else %>
-  Ruolo <strong>non ancora associato</strong> ad alcun progetto. Per associare scegliere un <%= link_to "progetto", projects_path %>.
-<% end %>
+<div id="role_projects_tab">
+  <%= render Role::ProjectsComponent.new(@role) %>
+</div>
 
 <div class="row my-3">
   <div class="col-md-6">
@@ -32,6 +26,11 @@
     </div>
   </div>
 </div>
+
+<h2>Logins</h2>
+<% @role.nodes.each do |node| %>
+  <%= render SshLogin::ListComponent.new(node.ssh_logins.order("numbers desc"), show: :all) %>
+<% end %>
 
 <div class="my-5 alert alert-secondary">
   <pre><%= raw @role.pp_content %></pre>
