@@ -39,8 +39,6 @@ namespace :inventory do
           end
           p web_site
           p web_site.web_site_addresses
-
-          gets
         end
       else
         p "No profile::nginxplus::sites"
