@@ -14,10 +14,11 @@ namespace :inventory do
           user = user.gsub("personale\\", "")
           unless users_to_skip.include?(user)
             timestamp = DateTime.parse(match["timestamp"])
-            if !(node = Node.find_by_name("#{match["host"]}.personale.dir.unibo.it"))
+            if (node = Node.find_by_name("#{match["host"]}.personale.dir.unibo.it"))
+              user_connections[user][node].append(timestamp)
+            else
               puts "--------- MANCA #{match["host"]}"
             end
-            user_connections[user][node].append(timestamp)
           end
         end
       end
@@ -25,8 +26,9 @@ namespace :inventory do
         if (user = User.find_by_sam(username))
           puts "#{username} -> #{user.inspect}"
           conns.each do |node, dates|
+            p node
             ssh_login = SshLogin.find_or_create_by!(user: user, node: node)
-            dates.select! { |d| d > ssh_login.last_login }
+            dates.select! { |d| d > (ssh_login.last_login || 0) }
             ssh_login.update(
               numbers: ssh_login.numbers + dates.count,
               last_login: dates.last
