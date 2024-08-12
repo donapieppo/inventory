@@ -2,9 +2,16 @@ class Node < ApplicationRecord
   belongs_to :role
   has_many :node_services
   has_many :node_ips
+  has_many :ssh_logins
+
+  validates :name, uniqueness: true
 
   def to_s
     name
+  end
+
+  def to_s_short
+    name.gsub(".personale.dir.unibo.it", "")
   end
 
   def data_file
