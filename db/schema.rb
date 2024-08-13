@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
+ActiveRecord::Schema[7.2].define(version: 2024_04_02_075357) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -132,6 +132,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.index ["role_id"], name: "fk_roles_projects_roles"
   end
 
+  create_table "projects_users", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "project_id", null: false, unsigned: true
+    t.integer "user_id", null: false, unsigned: true
+    t.text "notes"
+    t.index ["project_id"], name: "fk_project_projects_users"
+    t.index ["user_id"], name: "fk_users_projects_users"
+  end
+
   create_table "roles", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.column "os", "enum('windows','linux')"
     t.string "name", null: false
@@ -197,13 +205,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
   add_foreign_key "ad_groups_users", "ad_groups", name: "fk_ad_group_ad_groups_users", on_delete: :cascade
   add_foreign_key "ad_groups_users", "users", name: "fk_users_ad_groups_users", on_delete: :cascade
   add_foreign_key "node_ips", "nodes", name: "fk_node_ips"
-  add_foreign_key "node_services", "nodes", name: "fk_.odes_node_services", on_delete: :cascade
+  add_foreign_key "node_services", "nodes", name: "fk_nodes_node_services", on_delete: :cascade
   add_foreign_key "node_services", "softwares", name: "fk_softwares_node_services", on_delete: :cascade
   add_foreign_key "nodes", "roles", name: "fk_roles_id", on_delete: :cascade
   add_foreign_key "permissions", "organizations", name: "fk_organization_permission"
   add_foreign_key "permissions", "users", name: "fk_user_permission"
   add_foreign_key "projects_roles", "projects", name: "fk_project_projects_roles", on_delete: :cascade
   add_foreign_key "projects_roles", "roles", name: "fk_roles_projects_roles", on_delete: :cascade
+  add_foreign_key "projects_users", "projects", name: "fk_project_projects_users", on_delete: :cascade
+  add_foreign_key "projects_users", "users", name: "fk_users_projects_users", on_delete: :cascade
   add_foreign_key "ssh_logins", "nodes", name: "fk_nodes_ssh_logins", on_delete: :cascade
   add_foreign_key "ssh_logins", "users", name: "fk_user_ssh_logins", on_delete: :cascade
   add_foreign_key "web_site_addresses", "web_sites", name: "fk_web_sites"
