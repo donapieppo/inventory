@@ -4,6 +4,10 @@
   <%= @project.description %>
 </div>
 
+<div>
+  <strong>Reponsabili:</strong> <%= @project.users.map(&:name_and_upn).join(", ") %>
+</div>
+
 <div class="list-group my-3">
   <h3>Elenco ruoli e nodi</h3>
   <% @roles.each do |role| %>
@@ -18,11 +22,11 @@
 </div>
 
 <ul>
-<% @roles.each do |role| %>
-  <% role.nodes.each do |node| %>
-    <% node.web_sites.each do |web_site| %>
-      <li><%= link_to web_site.name, web_site %></li>
+  <% @roles.each do |role| %>
+    <% role.nodes.each do |node| %>
+      <% node.web_sites.each do |web_site| %>
+        <li><%= link_to web_site.name, web_site %></li>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
 </ul>

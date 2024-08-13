@@ -4,6 +4,6 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def update?
-    @user.is_cesia?
+    @user.is_cesia? || @user.project_ids.include?(@record.id)
   end
 end
