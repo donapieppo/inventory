@@ -9,6 +9,11 @@
     <div class="roles-association my-4">
       <%= f.association :roles, collection: Role.order(:name).all, as: :check_boxes, label: 'Ruoli' %>
     </div>
+    <% if current_user.is_cesia? %>
+      <div class="roles-association my-4">
+        <%= f.association :users, collection: User.order(:upn).all, label_method: :upn, as: :check_boxes, label: 'Responsabili' %>
+      </div>
+    <% end %>
   <% end %>
   <%= f.submit %>
 <% end %>

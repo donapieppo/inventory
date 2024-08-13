@@ -50,6 +50,8 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description, role_ids: [])
+    p = [:name, :description, role_ids: []]
+    p << {user_ids: []} if current_user.is_cesia?
+    params.require(:project).permit(p)
   end
 end
