@@ -26,4 +26,8 @@ class Node < ApplicationRecord
   def web_sites
     WebSiteAddress.where(ip: node_ips.map(&:ip)).map { |w| w.web_site }
   end
+
+  def zabbix_page
+    "https://zabbix.unibo.it/zabbix.php?name=#{name}&ip=&dns=&port=&status=-1&evaltype=0&tags%5B0%5D%5Btag%5D=&tags%5B0%5D%5Boperator%5D=0&tags%5B0%5D%5Bvalue%5D=&maintenance_status=1&filter_name=&filter_show_counter=0&filter_custom_time=0&sort=name&sortorder=ASC&show_suppressed=0&action=host.view"
+  end
 end

@@ -43,7 +43,10 @@
   <dd><%= render SshLogin::ListComponent.new(@node.ssh_logins.order("numbers desc"), show: :user) %></dd>
 </dl>
 
-
+<dl class="dl-horizontal">
+  <dt>Zabbix</dt>
+  <dd><%= link_to "visita la pagina di zabbix per questo nodo", @node.zabbix_page %></dd>
+</dl>
 
 <div class="alert alert-secondary">
   <% if File.exist?(@node.data_file) %>
