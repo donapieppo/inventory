@@ -1,10 +1,15 @@
 <h1>Modifica <i><%= @role %></i></h1>
 
-<div class="my-5 alert alert-secondary">
-  <pre><%= raw @role.pp_content %></pre>
-</div>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Inserisci una descrizione per questo ruolo</h2>
 
-<%= simple_form_for @role do |f| %>
-  <%= f.rich_text_area :description %>
-  <%= f.submit %>
-<% end %>
+    <%= simple_form_for @role do |f| %>
+      <%= f.rich_text_area :description %>
+      <%= f.submit %>
+    <% end %>
+  </div>
+  <div class="col-md-6 alert alert-secondary small">
+    <pre><%= raw @role.pp_content %></pre>
+  </div>
+</div>

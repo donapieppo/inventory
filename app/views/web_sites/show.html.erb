@@ -1,17 +1,18 @@
+<%= render DmUniboCommon::ModalComponent.new() do %>
+  <h1 class="text-center display-6">
+    <%= link_to dm_icon("link", text: @web_site.name), "https://#{@web_site.name}" %>
+  </h1>
 
-<h1 class="text-center display-6">
-  <%= link_to dm_icon("link", text: @web_site.name), "https://#{@web_site.name}" %>
-</h1>
+  <h2>Nodi</h2>
 
-<h2>Nodi</h2>
-
-<ul>
-  <% @web_site.web_site_addresses.each do |address| %>
-    <li>
-      <% if node_ip = NodeIp.where(ip: address.ip).first %>
-        <%= link_to node_ip.node %>
-      <% end %>
-      (<%= address.ip %>:<%= address.port %>)
-    </li>
-  <% end %>
-</ul>
+  <ul>
+    <% @web_site.web_site_addresses.each do |address| %>
+      <li>
+        <% if node_ip = NodeIp.where(ip: address.ip).first %>
+          <%= link_to node_ip.node %>
+        <% end %>
+        (<%= address.ip %>:<%= address.port %>)
+      </li>
+    <% end %>
+  </ul>
+<% end %>

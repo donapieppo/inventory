@@ -10,8 +10,8 @@
       </h2>
       <div id="collapse<%= software.id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= software.id %>" data-bs-parent="#accordionSoftware">
         <ul class="accordion-body">
-          <% software.node_services.each do |node_service| %>
-            <li><%= link_to node_service.node.name, node_service.node %> (<%= node_service.port %>)</li>
+          <% software.node_services.group(:node_id).each do |node_service| %>
+            <li><%= link_to node_service.node.name, node_service.node %></li>
           <% end %>
         </ul>
       </div>

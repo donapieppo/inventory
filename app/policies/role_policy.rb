@@ -4,7 +4,7 @@ class RolePolicy < ApplicationPolicy
   end
 
   def update?
-    @user.is_cesia?
+    @user.is_cesia? || @user.roles.include?(@record)
   end
 
   def choose_project?

@@ -1,4 +1,4 @@
 <%= turbo_stream.update "role_projects_tab" do %>
-  <%= render Role::ProjectsComponent.new(@role) %>
+  <%= render Role::ProjectsComponent.new(current_user, @role) %>
 <% end %>
 

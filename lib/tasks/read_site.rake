@@ -3,7 +3,7 @@ namespace :inventory do
     desc "Read roles and nodes from site.pp"
     task read_site: :environment do
       role_reg = Regexp.new 'custom_role\s+=\s+.(.+).include.*(windows|linux)'
-      site_pp = File.join(Rails.configuration.puppet_repo_dir, "manifests", "site.pp") 
+      site_pp = File.join(Rails.configuration.puppet_repo_dir, "manifests", "site.pp")
 
       File.readlines(site_pp)
         .map { |line| line.strip }

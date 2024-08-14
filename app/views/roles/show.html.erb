@@ -1,11 +1,15 @@
-<h1><%= @role %> <small>(<%= @role.os %>)</small> <%= link_to_edit "", [:edit, @role] %></h1>
+<h1>
+  <%= @role %>
+  <small>(<%= @role.os %>)</small>
+  <%= link_to_edit("", [:edit, @role]) if policy(@role).edit? %>
+</h1>
 
 <div class="alert alert-primary">
   <%= @role.description %>
 </div>
 
 <div id="role_projects_tab">
-  <%= render Role::ProjectsComponent.new(@role) %>
+  <%= render Role::ProjectsComponent.new(current_user, @role) %>
 </div>
 
 <div class="row my-3">

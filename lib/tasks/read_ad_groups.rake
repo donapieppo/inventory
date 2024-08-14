@@ -16,7 +16,6 @@ def extract_members(ldap, cn)
       puts "Trovato account #{entry[:dn][0]}"
       members << entry
     else
-      # CN=Michele Montani,OU=Sistemi,OU=Utenti-Adm,OU=CeSIA,OU=Gestione,DC=personale,DC=dir,DC=unibo,DC=it
       puts "Trovato group #{entry.inspect}"
       entry[:member].each do |m|
         members += extract_members(ldap, m.split(",")[0].split("=")[1])
@@ -45,7 +44,7 @@ namespace :inventory do
       AdGroup.find_each do |adg|
         next if adg.users.any?
 
-        sleep 5
+        sleep 3
         members = extract_members(ldap, adg.name)
 
         p "000000000000000000000"

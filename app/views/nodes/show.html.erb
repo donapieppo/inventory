@@ -1,11 +1,14 @@
-<h1><%= @node.name %> <%= link_to_edit "", [:edit, @node] %></h1>
+<h1>
+  <%= @node.name %>
+  <%= link_to_edit("", [:edit, @node]) if policy(@node).edit? %>
+</h1>
 
 <% unless @node.notes.blank? %>
   <div class="info"><%= @node.notes %></div>
 <% end %>
 
 <dl class="dl-horizontal">
-  <dt class="my-2">Progetti</dt>  
+  <dt>Progetti</dt>  
   <dd>
     <% @node.role.projects.each do |p| %>
       <%= link_to p.name, p, class: "btn btn-success" %>
@@ -13,18 +16,20 @@
   </dd>
   <dt>Ruolo</dt>
   <dd><%= link_to @node.role.to_s.upcase, @node.role %></dd>
-  <dt class="mb-3">Amm</dt>
-  <dd>
-    <% @node.role.ad_groups.each do |adg| %>
-      <%= link_to adg, adg %>
-    <% end %>
-  </dd>
+  <dt>Amm</dt>
+  <% @node.role.ad_groups.each do |adg| %>
+    <dd><%= link_to adg, adg %></dd>
+  <% end %>
   <dt>Servizi</dt>
   <dd>
     <% @node.node_services.order(:software_id, :port).each do |service| %>
       <strong><%= service.software %></strong> on port <%= service.port %> <br/>
     <% end %>
   </dd>
+  <dt>Siti web</dt>
+  <% @node.web_sites.each do |ws| %>
+    <dd><%= link_to ws, ws.url %></dd>
+  <% end %>
   <dt>IP</dt>
   <dd>
     <% @node.node_ips.each do |node_ip| %>
