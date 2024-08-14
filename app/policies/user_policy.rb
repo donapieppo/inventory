@@ -1,6 +1,6 @@
 class UserPolicy < ApplicationPolicy
   def show?
-    @user.is_cesia?
+    @user
   end
 
   def create?
