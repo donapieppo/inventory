@@ -1,8 +1,9 @@
 # syntax = docker/dockerfile:1
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
-ARG RUBY_VERSION=3.3.0
-FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
+ARG RUBY_VERSION=3.2.2
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim AS base
+MAINTAINER Donapieppo <donapieppo@yahoo.it>
 
 # Rails app lives here
 WORKDIR /rails
@@ -15,7 +16,7 @@ ENV RAILS_ENV="production" \
 
 
 # Throw-away build stage to reduce size of final image
-FROM base as build
+FROM base AS build
 
 # Install packages needed to build gems and node modules
 RUN apt-get update -qq && \
@@ -49,7 +50,6 @@ RUN bundle exec bootsnap precompile app/ lib/
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
-
 # Final stage for app image
 FROM base
 
@@ -71,10 +71,8 @@ USER rails:rails
 # donatini
 # ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-RUN ["/bin/cp", "/home/inventory/database.yml", "config/database.yml"]
-RUN ["/bin/cp", "/home/inventory/omniauth.rb", "config/initializers/omniauth.rb"]
-RUN ["/bin/cp", "/home/inventory/dm_unibo_common.yml", "config/dm_unibo_common.yml"]
-RUN ["/bin/cp", "/home/inventory/inventory.rb", "config/initializers/seminaria.rb"]
+RUN echo 'alias ll="ls -l"' >> ~/.bashrc
+RUN echo 'PS1="DOCKER \w: "' >> ~/.bashrc
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
