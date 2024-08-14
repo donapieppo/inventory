@@ -1,4 +1,7 @@
-<h1><%= @project.name %> <%= link_to_edit "", [:edit, @project] %></h1>
+<h1>
+  <%= @project.name %>
+  <%= link_to_edit("", [:edit, @project]) if policy(@project).edit? %>
+</h1>
 
 <div class="alert alert-primary">
   <%= @project.description %>
