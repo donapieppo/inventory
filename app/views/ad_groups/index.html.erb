@@ -1,13 +1,11 @@
 <h1>Gruppi in AD</h1>
 
 <%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome dell'utente") do %>
-  <div class="list-group">
-    <% @ad_groups.each do |adg| %>
-      <% user_string = adg.users.order(:surname).map(&:upn).join(", ") %>
-      <%= link_to adg, class: "list-group-item list-group-item-actions", data: {"limit-visible-target" => "item", text: user_string} do %>
-        <strong><%= adg %></strong>
-        <div class="small text-muted ps-2"><%= user_string %></div>
-      <% end %>
+  <% @ad_groups.each do |adg| %>
+    <% user_string = adg.users.order(:surname).map(&:upn).join(", ") %>
+    <%= link_to adg, class: "list-group-item list-group-item-actions", data: {"limit-visible-target" => "item", text: user_string} do %>
+      <strong><%= adg %></strong>
+      <div class="small text-muted ps-2"><%= user_string %></div>
     <% end %>
-  </div>
+  <% end %>
 <% end %>

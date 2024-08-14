@@ -4,10 +4,10 @@
   <%= link_to "Nuovo Utente", new_user_path, class: "btn btn-primary" %>
 </div>
 
-<div class="list-group">
-  <% @users.each do |user| %>
-    <%= link_to user, class: "list-group-item list-group-item-action" do %>
-      <%= user %> <small>(<%= user.upn %>)</small>
+<%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome") do %>
+  <% @users.each do |item| %>
+    <%= link_to item, class: "list-group-item list-group-item-action", data: {"limit-visible-target" => "item", text: item.cn} do %>
+      <%= item %> <small>(<%= item.upn %>)</small> <%= item.cn %>
     <% end %>
   <% end %>
-</div>
+<% end %>
