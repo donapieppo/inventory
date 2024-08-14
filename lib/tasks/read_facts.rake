@@ -15,6 +15,10 @@ namespace :inventory do
       uri = URI.parse(Rails.configuration.puppet_facts_uri)
       headers = {Accept: "application/json", "Content-Type": "application/json"}
 
+      # resettiamo tutte le relazioni tra software e nodi
+      ActiveRecord::Base.connection.execute("TRUNCATE node_services")
+      # ActiveRecord::Base.connection.execute("TRUNCATE softwares")
+
       # Node.where("name like '%hpc%' or name like '%ondema%'").each do |node|
       # Node.where("kernelversion is NULL").each do |node|
       Node.find_each do |node|
@@ -38,10 +42,11 @@ namespace :inventory do
           facts[fact["name"]] = fact["value"]
         end
 
+        # "9.76 GiB"
         memory = if facts["memorysize"]
-          facts["memorysize"].split(".")[0]
+          facts["memorysize"].split(" ")[0].to_f.round
         else
-          facts["memory"]["system"]["total"].split(".")[0]
+          facts["memory"]["system"]["total"].split(" ")[0].to_f.round
         end
 
         facts["networking"]["interfaces"].each do |interface, values|
@@ -61,24 +66,23 @@ namespace :inventory do
           datacenter_zone: facts["datacenter_zone"]
         )
 
-        node.node_services.destroy_all
-
         if facts.key?("cesia_services") && facts["cesia_services"].is_a?(Hash)
           # { "sshd": [22], "postgres": [5432], .... }
           facts["cesia_services"].each do |service, ports|
             p service
+
             # if (software = Software.find_by(name: service))
-            if (software = Software.find_or_create_by(name: service))
+            if (software = Software.find_or_create_by(name: Software.clear_service_name(service)))
               ports.each do |port|
                 NodeService.find_or_create_by!(node: node, software: software, port: port)
               end
             else
-              p "MANCA SOFTWARE ${service}"
+              p "Nonriesco a creare il SOFTWARE ${service}"
             end
           end
         end
 
-        sleep 2
+        sleep 1
       end
     end
   end
