@@ -1,5 +1,4 @@
 $enable-responsive-font-sizes: true;
 @import "dm_unibo_common/scss/dm";
 @import "application";
-@import 'actiontext';
-
+@import "trix/dist/trix";
