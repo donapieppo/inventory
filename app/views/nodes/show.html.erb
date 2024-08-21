@@ -17,9 +17,11 @@
   <dt>Ruolo</dt>
   <dd><%= link_to @node.role.to_s.upcase, @node.role %></dd>
   <dt>Amm</dt>
-  <% @node.role.ad_groups.each do |adg| %>
-    <dd><%= link_to adg, adg %></dd>
-  <% end %>
+  <dd>
+    <% @node.role.ad_groups.each do |adg| %>
+      <%= link_to adg, adg %><br/>
+    <% end %>
+  </dd>
   <dt>Servizi</dt>
   <dd>
     <% @node.node_services.order(:software_id, :port).each do |service| %>
@@ -27,9 +29,11 @@
     <% end %>
   </dd>
   <dt>Siti web</dt>
-  <% @node.web_sites.each do |ws| %>
-    <dd><%= link_to ws, ws.url %></dd>
-  <% end %>
+  <dd>
+    <% @node.web_sites.each do |ws| %>
+      <%= link_to ws, ws.url %><br/>
+    <% end %>
+  </dd>
   <dt>IP</dt>
   <dd>
     <% @node.node_ips.each do |node_ip| %>
