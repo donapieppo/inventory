@@ -19,12 +19,15 @@ namespace :inventory do
         role = role_reg.match(roles)
 
         if role
-          r = Role.create_with(os: role[2]).find_or_create_by!(name: role[1])
+          puts "----"
+          p role
+          r = Role.find_or_create_by!(os: role[2], name: role[1])
+          p r
           nodes.each do |node|
             node_name = node.delete("'").delete('"').strip
-            Node.create_with(role_id: r.id).find_or_create_by!(name: node_name)
+            p node_name
+            Node.find_or_create_by!(role_id: r.id, name: node_name)
           end
-          puts r.name
         end
       end
     end
