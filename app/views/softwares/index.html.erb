@@ -1,20 +1,9 @@
 <h1>Servizi</h1>
 
-<div class="accordion" id="accordionSoftware">
-  <% @softwares.each do |software| %>
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="heading<%= software.id %>">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= software.id %>" aria-expanded="true" aria-controls="collapse<%= software.id %>">
-          <%= software %>
-        </button>
-      </h2>
-      <div id="collapse<%= software.id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= software.id %>" data-bs-parent="#accordionSoftware">
-        <ul class="accordion-body">
-          <% software.node_services.group(:node_id).each do |node_service| %>
-            <li><%= link_to node_service.node.name, node_service.node %></li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
+<%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome del servizio") do %>
+  <% @softwares.each do |item| %>
+    <%= link_to item, class: "list-group-item list-group-item-actions", data: {"limit-visible-target" => "item", text: item.name, turbo_frame: 'modal'} do %>
+      <%= item.name %>
+    <% end %>
   <% end %>
-</div>
+<% end %>

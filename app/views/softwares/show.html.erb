@@ -1,0 +1,9 @@
+<%= render DmUniboCommon::ModalComponent.new() do %>
+  <h1><%= @software %></h1>
+  <ul>
+    <% @software.node_services.includes(:node).group(:node_id).order("nodes.name").each do |ns| %>
+      <li><%= link_to ns.node, ns.node %></li>
+    <% end %>
+  </ul>
+<% end %>
+
