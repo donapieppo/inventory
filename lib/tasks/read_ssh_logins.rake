@@ -23,12 +23,14 @@ namespace :inventory do
         end
       end
       user_connections.each do |username, conns|
-        if (user = User.find_by_sam(username))
+        user = User.find_by_sam(username) || AdmUser.find_by_sam(username)
+        user = user.user if user.is_a?(AdmUser)
+        if user
           puts "#{username} -> #{user.inspect}"
           conns.each do |node, dates|
             p node
             ssh_login = SshLogin.find_or_create_by!(user: user, node: node)
-            dates.select! { |d| d > (ssh_login.last_login || 0) }
+            dates.select! { |d| d >= (ssh_login.last_login || 0) }
             ssh_login.update(
               numbers: ssh_login.numbers + dates.count,
               last_login: dates.last
