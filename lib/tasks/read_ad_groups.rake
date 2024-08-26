@@ -27,10 +27,10 @@ def extract_members(ldap, cn)
   ldap.search(base: Rails.configuration.ad_treebase, filter: filter) do |entry|
     if account?(entry)
       # CN=Michele Montani,OU=Sistemi,OU=Utenti-Adm,OU=CeSIA,OU=Gestione,DC=personale,DC=dir,DC=unibo,DC=it
-      puts "Trovato account #{entry[:dn][0]}"
+      # puts "Trovato account #{entry[:dn][0]}"
       members << entry
     else
-      puts "Trovato group #{entry[:dn][0]}"
+      # puts "Trovato group #{entry[:dn][0]}"
       entry[:member].each do |m|
         members += extract_members(ldap, m.split(",")[0].split("=")[1])
       end
@@ -39,9 +39,20 @@ def extract_members(ldap, cn)
   members
 end
 
+def syncronize_ad_db(user)
+  User.create_with(
+    upn: user[:userprincipalname][0],
+    email: user[:userprincipalname][0],
+    name: user[:givenname][0],
+    surname: user[:sn][0],
+    sam: user[:samaccountname][0]
+  ).find_or_create_by(id: user[:extensionAttribute6]&.first)
+end
+
 # association AdmUser -> Usre
 def fix_adm_users(ldap)
   AdmUser.where(user_id: nil).each do |adm_user|
+    puts "fix_adm_users for #{adm_user.upn} #{adm_user.name} #{adm_user.surname} "
     u = User.where(
       name: adm_user.name,
       surname: adm_user.surname
@@ -50,9 +61,8 @@ def fix_adm_users(ldap)
       adm_user.update!(user_id: u.id)
     else
       filter = Net::LDAP::Filter.eq("sn", adm_user.surname) & Net::LDAP::Filter.eq("givenname", adm_user.name)
-      p adm_user
-      ldap.search(base: CESIA_BASE, filter: filter) do |entry|
-        p entry[:dn][0]
+      ldap.search(base: CESIA_BASE, filter: filter) do |user|
+        syncronize_ad_db user
       end
     end
   end
@@ -63,6 +73,7 @@ namespace :inventory do
     desc "Read adm_groups users"
     task read_ad_group_users: :environment do
       ldap = ldap_connect
+      fix_adm_users(ldap); exit
 
       # AdGroup.where(name: "Str81009.servizioinformatico.Grp").each do |adg|
       AdGroup.find_each do |adg|
@@ -77,13 +88,7 @@ namespace :inventory do
 
           if id_anagrafica_unica
             # User with id_anagrafica_unica
-            u = User.create_with(
-              upn: upn,
-              email: upn,
-              name: user[:givenname][0],
-              surname: user[:sn][0],
-              sam: user[:samaccountname][0]
-            ).find_or_create_by(id: id_anagrafica_unica.to_i)
+            u = syncronize_ad_db(user)
             begin
               adg.users << u
             rescue ActiveRecord::RecordNotUnique
@@ -112,29 +117,6 @@ namespace :inventory do
     end
   end
 end
-
-namespace :inventory do
-  namespace :puppet do
-    desc "Join AdmUser to User"
-    task join_adm_users: :environment do
-      AdmUser.find_each do |adm_user|
-        u = User.where(
-          name: adm_user.name,
-          surname: adm_user.surname
-        ).first
-        if u
-          adm_user.update!(user_id: u.id)
-
-        else
-          puts "NON TROVO"
-          p adm_user
-        end
-      end
-    end
-  end
-end
-
-# con idanagrafica
 
 # senza idanagrafica
 # <Net::LDAP::Entry:0x00007f3c3e6578c8 @myhash={:dn=>["CN=Pietro Donatini,OU=Sistemi,OU=Utenti-Adm,OU=CeSIA,OU=Gestione,DC=personale,DC=dir,DC=unibo,DC=it"], :objectclass=>["top", "person", "organizationalPerson", "user"], :cn=>["Pietro Donatini"], :sn=>["Donatini"], :description=>["Not in cloud sync - adminDescriptopn User_nosync in data 20240408"], :givenname=>["Pietro"], :distinguishedname=>["CN=Pietro Donatini,OU=Sistemi,OU=Utenti-Adm,OU=CeSIA,OU=Gestione,DC=personale,DC=dir,DC=unibo,DC=it"], :instancetype=>["4"], :whencreated=>["20240408092801.0Z"], :whenchanged=>["20240418094532.0Z"], :displayname=>["Pietro Donatini"], :usncreated=>["882230488"], :memberof=>["CN=amm.sistemi,OU=Sistemi,OU=CeSIA,OU=Gestione,DC=personale,DC=dir,DC=unibo,DC=it"], :usnchanged=>["891283563"], :admindescription=>["User_nosync"], :protocolsettings=>["RemotePowerShell§0"], :name=>["Pietro Donatini"], :objectguid=>["\xDF\xC40\xD5\x9A\xE3#C\x9F)\x8FO\x13K\x95@"], :useraccountcontrol=>["512"], :badpwdcount=>["0"], :codepage=>["0"], :countrycode=>["0"], :badpasswordtime=>["133579859292973371"], :lastlogon=>["133579859400199247"], :pwdlastset=>["133570430660922022"], :primarygroupid=>["513"], :objectsid=>["\x01\x05\x00\x00\x00\x00\x00\x05\x15\x00\x00\x00\x12\xDF\xE2\x80\xDFL\xD1YM\xC4:\xB9\x05\x81\x10\x00"], :admincount=>["1"], :accountexpires=>["9223372036854775807"], :logoncount=>["11"], :samaccountname=>["donatini.adm"], :samaccounttype=>["805306368"], :userprincipalname=>["donatini.adm@personale.dir.unibo.it"], :objectcategory=>["CN=Person,CN=Schema,CN=Configuration,DC=dir,DC=unibo,DC=it"], :dscorepropagationdata=>["20240410103304.0Z", "20240408094642.0Z", "16010101000000.0Z"], :lastlogontimestamp=>["133579071147782815"]}>
