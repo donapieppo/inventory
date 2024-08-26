@@ -1,8 +1,8 @@
 class Node < ApplicationRecord
   belongs_to :role
-  has_many :node_services
-  has_many :node_ips
-  has_many :ssh_logins
+  has_many :node_services, dependent: :destroy
+  has_many :node_ips, dependent: :destroy
+  has_many :ssh_logins, dependent: :destroy
 
   validates :name, uniqueness: true
 
