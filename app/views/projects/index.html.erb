@@ -6,12 +6,16 @@
   </div>
 <% end %>
 
-<div class="list-group">
+<div>
   <% @projects.each do |project| %>
-    <%= link_to project, class: "list-group-item" do %>
-      <h2><%= project.name %></h2>
-      <div class="text-secondary">
-        <%= project.description %>
+    <%= link_to project, class: "link-underline link-underline-opacity-0" do %>
+      <div class="card text-bg-light mb-1">
+        <div class="card-header fw-bold">
+          <%= project.name %>
+        </div>
+        <div class="card-body small">
+          <%= project.description %>
+        </div>
       </div>
     <% end %>
   <% end %>
