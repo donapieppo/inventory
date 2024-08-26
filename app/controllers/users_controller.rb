@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def index
     authorize :user
-    @users = User.order(:surname, :name).all
+    @users = User.order(:surname, :name).includes(:adm_users).all
   end
 
   def show
