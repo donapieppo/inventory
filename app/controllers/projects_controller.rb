@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
 
   def show
     @roles = @project.roles.order(:name).includes(:nodes)
+    @users = @project.users.order(:upn)
   end
 
   def new
