@@ -8,9 +8,10 @@
 
 <div>
   <% @projects.each do |project| %>
+    <% my_project = (project.user_ids.include?(current_user.id)) %>
     <%= link_to project, class: "link-underline link-underline-opacity-0" do %>
-      <div class="card text-bg-light mb-1">
-        <div class="card-header fw-bold">
+      <div class="card bg-light mb-1">
+        <div class="card-header <%= my_project ? "bg-info" : "bg-light" %> fw-bold py-1">
           <%= project.name %>
         </div>
         <div class="card-body small">

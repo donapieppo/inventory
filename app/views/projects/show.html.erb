@@ -3,12 +3,12 @@
   <%= link_to_edit("", [:edit, @project]) if policy(@project).edit? %>
 </h1>
 
-<div class="alert alert-primary">
-  <%= @project.description %>
+<div class="my-2">
+  <strong>Reponsabili:</strong> <%= @project.users.map(&:name_and_upn).join(", ") %>
 </div>
 
-<div>
-  <strong>Reponsabili:</strong> <%= @project.users.map(&:name_and_upn).join(", ") %>
+<div class="alert alert-info">
+  <%= @project.description %>
 </div>
 
 <div class="list-group my-3">

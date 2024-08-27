@@ -3,7 +3,8 @@ class ProjectsController < ApplicationController
 
   def index
     authorize :project
-    @projects = Project.order(:name).all
+    @projects = Project.order(:name).includes(:users).all
+    # @my_projects = Project.order(:name).where(user_id: current_user.id)
   end
 
   def show
