@@ -18,7 +18,8 @@ class Node < ApplicationRecord
     Rails.configuration.puppet_repo_dir + "/data/nodes/#{name}.yaml"
   end
 
-  def update_ip_association(ip)
+  def update_ip_association_from_s(ip)
+    ip = IPAddr.new(ip).to_i
     n = node_ips.find_or_create_by!(ip: ip)
     n.update(updated_at: Time.now) unless n.new_record?
   end

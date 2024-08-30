@@ -10,7 +10,10 @@ gem "jsbundling-rails"
 gem "cssbundling-rails"
 gem "sprockets-rails"
 
+gem "lograge"
+
 gem "net-ldap"
+gem "ipaddr"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

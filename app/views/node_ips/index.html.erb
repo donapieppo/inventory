@@ -1,0 +1,19 @@
+<h1>
+  IP<br/>
+</h1>
+
+<% network = nil %>
+<%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi la sottorete per limitare la vista") do %>
+  <dl class="dl-horizontal">
+    <% @node_ips.each do |item| %>
+      <% ip = item.ip_to_s %>
+      <% if network != (network = item.network) %>
+        <dt data-limit-visible-target="item" data-text="<%= network %>"><%= network %></dt>
+      <% end %>
+      <dd data-limit-visible-target="item" data-text="<%= ip %>">
+        <span style="width: 9em; display: inline-block;"><%= link_to ip, item.node %></span>
+        <small><%= item.node.name %></small>
+      </dd>
+    <% end %>
+  </dl>
+<% end %>

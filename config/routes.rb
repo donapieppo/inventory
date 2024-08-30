@@ -25,6 +25,7 @@ Rails.application.routes.draw do
       end
     end
     resources :web_sites
+    resources :node_ips, only: [:index]
 
     get "/", to: "projects#index", as: "current_organization_root"
   end

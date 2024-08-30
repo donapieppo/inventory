@@ -52,7 +52,7 @@ namespace :inventory do
         facts["networking"]["interfaces"].each do |interface, values|
           next if interface == "lo"
           next if values["ip"].blank?
-          node.update_ip_association(values["ip"])
+          node.update_ip_association_from_s(values["ip"])
         end
 
         File.write("/tmp/facts.yml", facts.to_s)
