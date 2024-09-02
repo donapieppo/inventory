@@ -38,10 +38,18 @@
   <%= render SshLogin::ListComponent.new(node.ssh_logins.order("numbers desc"), show: :all) %>
 <% end %>
 
-<div class="my-5 alert alert-secondary">
+<div class="mt-4 small">
+  <%= @role.pp_file %>
+</div>
+
+<div class="alert alert-secondary">
   <pre><%= raw @role.pp_content %></pre>
 </div>
 
-<div class="my-5 alert alert-secondary">
+<div class="mt-4 small">
+  <%= @role.yaml_file %>
+</div>
+
+<div class="alert alert-secondary">
   <pre><%= raw @role.yaml_content %></pre>
 </div>
