@@ -15,7 +15,7 @@
   <% if @users.any? %>
     <strong>Reponsabili:</strong> <%= @users.map(&:name_and_upn).join(", ") %>
   <% else %>
-    Non sono stati definiti ancora <strong>responsabili</strong> del progetto.
+    <span class="text-danger">Non sono stati definiti ancora <strong>responsabili</strong> del progetto.</span>
   <% end %>
 </div>
 
