@@ -52,10 +52,9 @@ namespace :inventory do
         facts["networking"]["interfaces"].each do |interface, values|
           next if interface == "lo"
           next if values["ip"].blank?
+          next if values["ip"].match?(/172\.\d+\.\d+\.1$/)
           node.update_ip_association_from_s(values["ip"])
         end
-
-        File.write("/tmp/facts.yml", facts.to_s)
 
         node.update!(
           operatingsystem: facts["os"]["name"],
@@ -77,11 +76,10 @@ namespace :inventory do
                 NodeService.find_or_create_by!(node: node, software: software, port: port)
               end
             else
-              p "Nonriesco a creare il SOFTWARE ${service}"
+              p "Non riesco a creare il SOFTWARE ${service}"
             end
           end
         end
-
         sleep 1
       end
     end
