@@ -37,7 +37,7 @@
   <dt>IP</dt>
   <dd>
     <% @node.node_ips.each do |node_ip| %>
-      <strong><%= node_ip.ip %></strong> <br/>
+      <strong><%= node_ip.ip_to_s %></strong> <br/>
     <% end %>
   </dd>
 
