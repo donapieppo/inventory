@@ -18,6 +18,7 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    @what = params[:what]
   end
 
   def create
@@ -25,7 +26,7 @@ class ProjectsController < ApplicationController
     authorize @project
 
     if @project.save
-      redirect_to @project, notice: "Project was successfully created."
+      redirect_to [:edit, @project], notice: "Project was successfully created."
     else
       render :new, status: :unprocessable_entity
     end

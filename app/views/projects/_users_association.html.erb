@@ -1,0 +1,19 @@
+<% selected_ids = project.user_ids %>
+<%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome dell'utente") do %>
+  <div class="users-association my-4">
+    <% User.order(:upn).each do |user| %>
+      <div class="form-check" data-limit-visible-target="item" data-text="<%= user.cn %> <%= user.upn %>">
+        <input class="form-check-input check_boxes" 
+               type="checkbox" 
+               <%= 'checked="checked"' if selected_ids.include?(user.id) %>
+               value="<%= user.id %>" 
+               name="project[user_ids][]" 
+               id="project_user_ids_<%= user.id %>"/>
+        <label for="project_user_ids_<%= user.id %>">
+          <%= user.upn %>
+        </label>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+

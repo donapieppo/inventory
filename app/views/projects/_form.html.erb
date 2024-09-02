@@ -1,19 +1,42 @@
 <%= dm_form_for project do |f| %>
   <%= f.dm_error_notification %>  
-  <%= f.input :name %>
-  <div class="offset-sm-3">
-    <%= f.rich_text_area :description %>
-  </div>
+
+  <% if !what %>
+    <%= f.input :name %>
+    <div class="offset-sm-3">
+      <%= f.rich_text_area :description %>
+    </div>
+  <% end %>
 
   <% if !project.new_record? %>
-    <div class="roles-association my-4">
-      <%= f.association :roles, collection: Role.order(:name).all, as: :check_boxes, label: 'Ruoli' %>
-    </div>
-    <% if current_user.is_cesia? %>
-      <div class="roles-association my-4">
-        <%= f.association :users, collection: User.order(:upn).all, label_method: :upn, as: :check_boxes, label: 'Responsabili' %>
+    <% case what %>
+    <% when "roles" %>
+      <%= render "roles_association", project: project %>
+    <% when "users" %>
+      <% if current_user.is_cesia? %>
+        <%= render "users_association", project: project %>
+      <% end %>
+    <% else %>
+      <div class="offset-sm-3 row my-3">
+        <div class="col">
+          <h2>Ruoli associati <%= link_to_edit "", [:edit, @project, what: "roles"] %></h2>
+          <ul>
+            <% project.roles.each do |role| %>
+              <li><%= link_to role %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="col">
+          <h2>Responsabili <%= link_to_edit "", [:edit, @project, what: "users"] %></h2>
+          <ul>
+            <% project.users.each do |user| %>
+              <li><%= link_to user %></li>
+            <% end %>
+          </ul>
+        </div>
       </div>
     <% end %>
   <% end %>
-  <%= f.submit %>
+
+  <%= f.submit class: "my-2"%>
 <% end %>
