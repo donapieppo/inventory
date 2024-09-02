@@ -1,4 +1,4 @@
-.roles-association {
+.projects-association {
   .form-check input {
     display: none;
   }
@@ -29,4 +29,33 @@
   }
 }
 
-
+.roles-association, .users-association {
+  .form-check input {
+    display: none;
+  }
+  .form-check {
+    display: inline-block;
+  }
+  .form-check label {
+    @extend .btn;
+    @extend .btn-outline-secondary;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    margin-top: 4px;
+    margin-left: 0 !important;
+  }
+  //label.collection_radio_buttons{
+  //  @extend .btn-outline-warning;
+  //}
+  .form-check {
+    padding-left: 6px;
+  }
+  .form-check-label {
+    color: #333 !important;
+  }
+  // label:selected {
+  input:checked+label {
+    @extend .btn-info;
+    color: #eee !important;;
+  }
+}

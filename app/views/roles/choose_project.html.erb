@@ -1,6 +1,6 @@
 <%= render DmUniboCommon::ModalComponent.new() do %>
   <% simple_form_for @role, url: set_projects_role_path(@role) do |f| %>
-    <div class="roles-association my-4">
+    <div class="projects-association my-4">
       <%= f.association :projects, collection: Project.order(:name).all, as: :check_boxes, label: 'Progetti' %>
     </div>
     <%= f.submit "Salva" %>
