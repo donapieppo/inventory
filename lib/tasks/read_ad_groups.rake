@@ -36,6 +36,9 @@ def extract_members(ldap, cn)
       end
     end
   end
+  if members.empty?
+    Rails.logger.info("Empty ad group: #{cn}")
+  end
   members
 end
 
@@ -73,7 +76,6 @@ namespace :inventory do
     desc "Read adm_groups users"
     task read_ad_group_users: :environment do
       ldap = ldap_connect
-      fix_adm_users(ldap); exit
 
       # AdGroup.where(name: "Str81009.servizioinformatico.Grp").each do |adg|
       AdGroup.find_each do |adg|
@@ -108,9 +110,9 @@ namespace :inventory do
               sam: user[:samaccountname][0]
             ).find_or_create_by!(upn: upn)
           end
-          # gets
         end
         sleep 1
+        gets
       end
 
       fix_adm_users(ldap)
