@@ -3,7 +3,7 @@ class RolesController < ApplicationController
 
   def index
     authorize :role
-    @roles = Role.includes(:projects).order(:name)
+    @roles = Role.includes(:projects, :ad_groups).order(:name)
   end
 
   def show
