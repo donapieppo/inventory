@@ -1,5 +1,5 @@
 <% selected_ids = project.user_ids %>
-<%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome dell'utente") do %>
+<%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome dell'utente", display: "inline-block") do %>
   <div class="users-association my-4">
     <% User.order(:upn).each do |user| %>
       <div class="form-check" data-limit-visible-target="item" data-text="<%= user.cn %> <%= user.upn %>">

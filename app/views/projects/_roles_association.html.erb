@@ -1,5 +1,5 @@
 <% selected_ids = project.role_ids %>
-<%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome del ruolo") do %>
+<%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome del ruolo", display: "inline-block") do %>
   <div class="roles-association my-4">
     <% Role.order(:name).each do |role| %>
       <div class="form-check" data-limit-visible-target="item" data-text="<%= role.name %>">
