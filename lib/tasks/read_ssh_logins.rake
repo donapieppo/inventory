@@ -30,7 +30,7 @@ namespace :inventory do
           conns.each do |node, dates|
             p node
             ssh_login = SshLogin.find_or_create_by!(user: user, node: node)
-            dates.select! { |d| d >= (ssh_login.last_login || 0) }
+            dates.select! { |d| d > (ssh_login.last_login || 0) }
             ssh_login.update(
               numbers: ssh_login.numbers + dates.count,
               last_login: dates.last
