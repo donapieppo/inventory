@@ -32,7 +32,7 @@ namespace :inventory do
             ip, port = um.strip.split(" ")&.dig(0)&.split(":")
 
             if ip.match(ip_regexp)
-              web_site.web_site_addresses.find_or_create_by!(ip: ip, port: port.to_i)
+              web_site.update_ip_association_from_s(ip, port)
             else
               p "NO IP #{ip}"
             end

@@ -11,7 +11,7 @@
         <% if node_ip = NodeIp.where(ip: address.ip).first %>
           <%= link_to node_ip.node %>
         <% end %>
-        (<%= address.ip %>:<%= address.port %>)
+        (<%= address.ip_to_s %>:<%= address.port %>)
       </li>
     <% end %>
   </ul>
