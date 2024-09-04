@@ -118,6 +118,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.string "kernelversion"
     t.integer "processorcount"
     t.integer "memorysize"
+    t.string "disks"
     t.string "datacenter_zone"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
@@ -243,16 +244,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
 
   create_table "web_site_addresses", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "web_site_id", null: false, unsigned: true
-    t.string "ip", null: false
+    t.integer "ip", null: false, unsigned: true
     t.integer "port", unsigned: true
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-    t.index ["ip"], name: "web_sites_addresses_ip"
+    t.index ["ip"], name: "ip"
     t.index ["web_site_id"], name: "fk_web_sites"
   end
 
   create_table "web_sites", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.text "name"
+    t.column "state", "enum('up','draining','down','unavail','checking','unhealthy')"
+    t.integer "arch_requests", default: 0, unsigned: true
+    t.integer "new_requests", default: 0, unsigned: true
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["name"], name: "name", unique: true, using: :hash
