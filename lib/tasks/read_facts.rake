@@ -62,6 +62,7 @@ namespace :inventory do
           kernelversion: facts["kernelversion"],
           processorcount: facts["processors"]["count"],
           memorysize: memory,
+          disks: facts["disks"] ? facts["disks"].map { |disk, data| "#{disk} #{data["size"]}" }.join(", ") : "",
           datacenter_zone: facts["datacenter_zone"]
         )
 
