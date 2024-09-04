@@ -3,6 +3,13 @@
     <%= link_to dm_icon("link", text: @web_site.name), "https://#{@web_site.name}" %>
   </h1>
 
+  <dl class="dl-horizontal">
+    <dt>Stato:</dt>
+    <dd><%= @web_site.state %></dd>
+    <dt>Requests:</dt>
+    <dd><%= @web_site.requests %></dd>
+  </dl>
+
   <h2>Nodi</h2>
 
   <ul>
