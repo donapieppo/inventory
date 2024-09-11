@@ -1,0 +1,15 @@
+<dl class="dl-horizontal">
+  <% @list.each do |attr| %>
+    <dt>
+      <%= I18n.t "activerecord.attributes.#{@record.class.to_s.downcase}.#{attr}" %>
+    </dt>
+    <dd>
+      <% res = @record.send(attr) %>
+      <% if res.is_a?(Date) %>
+        <%= I18n.l @record.send(attr) %>
+      <% else %>
+        <%= @record.send(attr) %>
+      <% end %>
+    </dd>
+  <% end %>
+</dl>

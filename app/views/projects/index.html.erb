@@ -11,8 +11,11 @@
     <% my_project = (project.user_ids.include?(current_user.id)) %>
     <%= link_to project, class: "col link-underline link-underline-opacity-0" do %>
       <div class="card h-100 bg-light mb-1">
-        <div class="card-header <%= my_project ? "bg-warning" : "bg-light" %> fw-bold py-1">
+        <div class="card-header <%= project_color(project, my_project) %> fw-bold py-1">
           <%= project.name %>
+          <% if project.agreements.any? %>
+            <span class="float-end">Accordo</span>
+          <% end %>
         </div>
         <div class="card-body bg-white small">
           <%= project.description %>

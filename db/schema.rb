@@ -78,6 +78,28 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.index ["user_id"], name: "fk_adm_users_users"
   end
 
+  create_table "agreements", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.boolean "external", default: false
+    t.text "party"
+    t.text "referent"
+    t.text "referent_contact"
+    t.text "name"
+    t.text "description"
+    t.date "start_date"
+    t.date "end_date"
+    t.decimal "amount", precision: 10
+    t.column "status", "enum('draft','active','expired','terminated')", default: "draft"
+    t.timestamp "created_at", default: -> { "current_timestamp()" }
+    t.timestamp "updated_at", default: -> { "current_timestamp() ON UPDATE current_timestamp()" }
+  end
+
+  create_table "agreements_projects", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "agreement_id", null: false, unsigned: true
+    t.integer "project_id", null: false, unsigned: true
+    t.index ["agreement_id", "project_id"], name: "agreement_id", unique: true
+    t.index ["project_id"], name: "fk_project_agreements_projects"
+  end
+
   create_table "hpc_groups", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -91,6 +113,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.text "notes"
     t.index ["hpc_group_id"], name: "fk_groups_hpc_members"
     t.index ["user_id"], name: "fk_users_hpc_members"
+  end
+
+  create_table "important_dates", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "datable_type", null: false
+    t.integer "datable_id", null: false
+    t.column "date_type", "enum('memorandum','alert')", null: false
+    t.date "date", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.index ["datable_type", "datable_id"], name: "index_important_dates"
   end
 
   create_table "node_ips", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -123,6 +155,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["role_id"], name: "fk_roles_id"
+  end
+
+  create_table "nodes_projects", id: { type: :integer, unsigned: true }, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "project_id", null: false, unsigned: true
+    t.integer "node_id", null: false, unsigned: true
+    t.text "notes"
+    t.index ["node_id"], name: "fk_nodes_nodes_projects"
+    t.index ["project_id"], name: "fk_project_nodes_projects"
   end
 
   create_table "nodes_services", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -269,12 +309,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
   add_foreign_key "ad_groups_users", "ad_groups", name: "fk_ad_group_ad_groups_users", on_delete: :cascade
   add_foreign_key "ad_groups_users", "users", name: "fk_users_ad_groups_users", on_delete: :cascade
   add_foreign_key "adm_users", "users", name: "fk_adm_users_users"
+  add_foreign_key "agreements_projects", "agreements", name: "fk_agreement_agreements_projects", on_delete: :cascade
+  add_foreign_key "agreements_projects", "projects", name: "fk_project_agreements_projects", on_delete: :cascade
   add_foreign_key "hpc_memberships", "hpc_groups", name: "fk_groups_hpc_members", on_delete: :cascade
   add_foreign_key "hpc_memberships", "users", name: "fk_users_hpc_members", on_delete: :cascade
   add_foreign_key "node_ips", "nodes", name: "fk_node_ips"
   add_foreign_key "node_services", "nodes", name: "fk_nodes_node_services", on_delete: :cascade
   add_foreign_key "node_services", "softwares", name: "fk_softwares_node_services", on_delete: :cascade
   add_foreign_key "nodes", "roles", name: "fk_roles_id", on_delete: :cascade
+  add_foreign_key "nodes_projects", "nodes", name: "fk_nodes_nodes_projects", on_delete: :cascade
+  add_foreign_key "nodes_projects", "projects", name: "fk_project_nodes_projects", on_delete: :cascade
   add_foreign_key "nodes_services", "nodes", name: "fk_node_nodes_services", on_delete: :cascade
   add_foreign_key "nodes_services", "services", name: "fk_service_nodes_services", on_delete: :cascade
   add_foreign_key "permissions", "organizations", name: "fk_organization_permission"

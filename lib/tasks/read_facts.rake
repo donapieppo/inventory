@@ -62,7 +62,7 @@ namespace :inventory do
           kernelversion: facts["kernelversion"],
           processorcount: facts["processors"]["count"],
           memorysize: memory,
-          disks: facts["disks"] ? facts["disks"].map { |disk, data| "#{disk} #{data["size"]}" }.join(", ") : "",
+          disks: facts["disks"] ? facts["disks"].except("sr0").map { |disk, data| "#{disk} #{data["size"]}" }.join(", ") : "",
           datacenter_zone: facts["datacenter_zone"]
         )
 
@@ -81,7 +81,7 @@ namespace :inventory do
             end
           end
         end
-        sleep 1
+        sleep 0.5
       end
     end
   end

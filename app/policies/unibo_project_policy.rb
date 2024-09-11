@@ -1,0 +1,3 @@
+class UniboProjectPolicy < ApplicationPolicy
+end
+

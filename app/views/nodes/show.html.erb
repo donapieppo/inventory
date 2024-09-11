@@ -33,10 +33,7 @@
     <% @node.web_sites.each do |ws| %>
       <div>
         <%= link_to ws, ws, data: {turbo_frame: :modal}, class: "text-#{web_site_state_color(ws)}" %>
-        <span class="ms-2 badge text-dark small bg-info bg-<%= web_site_state_color(ws) %>"><%= ws.requests %></span>
-        <% if ws.state != "up" %>
-          <small><%= ws.state %></small>
-        <% end %>
+        <span class="ms-2 badge text-dark small bg-success text-white bg-<%= web_site_state_color(ws) %>"><%= ws.requests %></span>
       </div>
     <% end %>
   </dd>

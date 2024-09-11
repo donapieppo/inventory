@@ -1,5 +1,6 @@
 class Node < ApplicationRecord
   belongs_to :role
+  has_and_belongs_to_many :agreements
   has_many :node_services, dependent: :destroy
   has_many :node_ips, dependent: :destroy
   has_many :ssh_logins, dependent: :destroy

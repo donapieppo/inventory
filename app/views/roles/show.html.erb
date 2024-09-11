@@ -17,7 +17,13 @@
     <h2 class="my-2">Nodi</h2>
     <div class="list-group">
       <% @role.nodes.each do |node| %>
-        <%= link_to node, node, class: "list-group-item list-group-item-action" %>
+        <%= link_to node, class: "list-group-item list-group-item-action" do %>
+          <div><%= node %></div>
+          <div class="text-secondary small ms-3">
+            <strong>ram:</strong> <%= node.memorysize %> GB 
+            <strong>dischi:</strong> <%= node.disks %>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -30,13 +36,13 @@
         <% end %>
       <% end %>
     </div>
+
+    <h2 class="my-2">Logins</h2>
+    <% @role.nodes.each do |node| %>
+      <%= render SshLogin::ListComponent.new(node.ssh_logins.order("numbers desc"), show: :all) %>
+    <% end %>
   </div>
 </div>
-
-<h2>Logins</h2>
-<% @role.nodes.each do |node| %>
-  <%= render SshLogin::ListComponent.new(node.ssh_logins.order("numbers desc"), show: :all) %>
-<% end %>
 
 <div class="mt-4 small">
   <%= @role.pp_file %>

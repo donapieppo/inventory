@@ -22,7 +22,6 @@ module Inventory
     config.hosts << "ondemand.hpc.unibo.it:3000"
 
     config.authlevels = {read: 1, manage: 2}
-    config.lograge.enabled = true
 
     config.action_mailer.default_url_options = {protocol: "https"}
     config.dm_unibo_common = ActiveSupport::HashWithIndifferentAccess.new config_for(:dm_unibo_common)

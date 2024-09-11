@@ -1,0 +1,7 @@
+<%= dm_form_for [@what, @date] do |f| %>
+  <%= f.input :date_type, collection: [["promemoria", "memorandum"], ["avviso", "alert"]], as: :radio_buttons %>
+  <%= f.input :date, as: :date_html5 %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <%= f.submit %>
+<% end %>

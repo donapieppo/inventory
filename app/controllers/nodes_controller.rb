@@ -4,7 +4,10 @@ class NodesController < ApplicationController
   # GET /nodes
   def index
     authorize :node
-    @nodes = Node.order(:name).includes(:role).all
+    @nodes = Node.order(:name).includes(:role)
+    if params[:os] && params[:os_version]
+      @nodes = @nodes.where("operatingsystem = ? and operatingsystemrelease <= ?", params[:os], params[:os_version])
+    end
   end
 
   def show
