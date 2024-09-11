@@ -4,7 +4,18 @@ it:
       project: Progetto
       service: Servizio
       node: Nodo
+      important_date: Promemoria
+      agreement: Accordo/Convenzione
     attributes:
+      agreement:
+        party: Contraente
+        referent: Referente
+        referent_contact: Contatto referente
+        external: Esterno (convenzione)
+        name: Titolo
+        description: Descrizione
+        start_date: Data di inizio
+        end_date: Data di fine
       project:
         name: Nome
       role:
@@ -12,3 +23,13 @@ it:
         description: Descrizone
       node:
         notes: Note
+      important_date:
+        date_type: Tipologia
+        date: Data
+        name: Titolo
+        description: Dettagli
+
+  simple_form:
+    hints:
+      agreement:
+        external: Selezionare in caso di convenzione (si emette fattura con iva).

@@ -1,0 +1,28 @@
+<h1>
+  <%= @agreement.name %>
+  <%= link_to_edit("", [:edit, @agreement]) if policy(@agreement).edit? %>
+</h1>
+
+<%= render DlListComponent.new @agreement, [:party, :referent, :referent_contact, :name, :description, :start_date, :end_date] %>
+
+<h2>Elenco progetti</h2>
+<div class="my-3">
+  <% @projects.each do |project| %>
+    <h3><%= project.name %></h3>
+    <div class="text-secondary">
+      <%= project.description %>
+    </div>
+    <div class="mt-1 ms-3 list-group text-secondary">
+      <% project.roles.includes(:nodes).each do |role| %>
+        <%= link_to role, class: "list-group-item" do %>
+          <h2><%= role.name %></h2>
+          <div class="text-secondary"><%= role.description %></div>
+          <div class="mt-1 ms-3 text-secondary">
+            <small><%= role.nodes.map(&:name).join(", ") %></small>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+

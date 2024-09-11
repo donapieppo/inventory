@@ -16,7 +16,11 @@ Rails.application.routes.draw do
   scope ":__org__" do
     resources :users
     resources :ad_groups
-    resources :projects
+    resources :projects do
+      resources :important_dates
+    end
+    resources :agreements
+    resources :important_dates
     resources :softwares
     resources :roles do
       member do

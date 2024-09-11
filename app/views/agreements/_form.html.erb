@@ -1,0 +1,17 @@
+<%= dm_form_for @agreement do |f| %>
+  <%= f.input :external %>
+  <%= f.input :party, as: :string %>
+  <%= f.input :referent, as: :string %>
+  <%= f.input :referent_contact, as: :string %>
+  <%= f.input :name, as: :string %>
+  <%= f.input :description %>
+  <%= f.input :start_date, as: :date_html5 %>
+  <%= f.input :end_date, as: :date_html5 %>
+  <% if !@agreement.new_record? %>
+    <div class="projects-association my-4">
+      <%= f.association :projects, collection: Project.order(:name).all, as: :check_boxes, label: 'Progetti' %>
+    </div>
+  <% end %>
+  <%= f.submit %>
+<% end %>
+
