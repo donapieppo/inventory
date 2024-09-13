@@ -20,7 +20,8 @@
         <%= link_to node, class: "list-group-item list-group-item-action" do %>
           <div><%= node %></div>
           <div class="text-secondary small ms-3">
-            <strong>ram:</strong> <%= node.memorysize %> GB 
+            <strong>proc:</strong> <%= node.processorcount %> &nbsp;
+            <strong>ram:</strong> <%= node.memorysize %> GB &nbsp;
             <strong>dischi:</strong> <%= node.disks %>
           </div>
         <% end %>
