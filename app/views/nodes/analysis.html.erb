@@ -1,0 +1,39 @@
+<h1>Analisi</h1>
+
+<% @versions.each do |version| %>
+  <% next if version.operatingsystem.blank? %>
+  <%= link_to analysis_nodes_path(os: version.operatingsystem, os_version: version.operatingsystemrelease), class: "badge bg-warning text-dark" do %>
+    <%= version.operatingsystem %> - <%= version.operatingsystemrelease %> 
+  <% end %>
+<% end %>
+
+<h2 class="my-2"><%= @title %></h2>
+
+<% @nodes.each do |item| %>
+  <%= link_to item, class: "card text-decoration-none" do %>
+    <div class="card-header">
+      <strong><%= item.name %></strong>
+      <span class="small float-end"><%= item.operatingsystem %> <%= item.operatingsystemrelease %></span>
+    </div>
+    <div class="card-body">
+      <dl class="dl-horizontal">
+        <dt>Ruolo:</dt>
+        <dd><%= item.role.to_s.upcase %></dd>
+        <dt>Gruppi:</dt>
+        <dd><%= item.role.ad_groups.map(&:name).join(", ") %></dd>
+        <dt>Siti:</dt>
+        <dd>
+          <% item.web_sites.each do |ws| %>
+            <div>
+              <%= ws.name %> 
+              <span class="badge bg-<%= web_site_state_color(ws) %> float-end"><%= ws.arch_requests + ws.new_requests %> accessi</span>
+            </div>
+          <% end %>
+        </dd>
+        <dt>Accessi ssh:</dt>
+        <dd><%= item.ssh_logins.map(&:user).join(", ") %>&nbsp;</dd>
+      </dl>
+    </div>
+  <% end %>
+<% end %>
+
