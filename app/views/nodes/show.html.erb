@@ -16,7 +16,7 @@
   </dd>
   <dt>Ruolo</dt>
   <dd><%= link_to @node.role.to_s.upcase, @node.role %></dd>
-  <dt>Amm</dt>
+  <dt>Gruppi Amm</dt>
   <dd>
     <% @node.role.ad_groups.each do |adg| %>
       <%= link_to adg, adg %><br/>
@@ -51,7 +51,7 @@
 </dl>
 
 <dl class="dl-horizontal">
-  <dt>Logins</dt>
+  <dt>Accessi ssh</dt>
   <dd><%= render SshLogin::ListComponent.new(@node.ssh_logins.order("numbers desc"), show: :user) %></dd>
 </dl>
 

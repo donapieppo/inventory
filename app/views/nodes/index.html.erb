@@ -1,8 +1,10 @@
 <h1>Nodes</h1>
 
-<%= link_to "all", nodes_path %> -
-<%= link_to "ubuntu <= 16", nodes_path(os: "ubuntu", os_version: "16.04") %>
-<%= link_to "ubuntu <= 20", nodes_path(os: "ubuntu", os_version: "20.04") %>
+<div class="text-end">
+  Analisi: 
+  <%= link_to "ubuntu 16.04", analysis_nodes_path(os: "ubuntu", os_version: "16.04"), class: "badge bg-warning text-dark" %>
+  <%= link_to "ubuntu 20.04", analysis_nodes_path(os: "ubuntu", os_version: "20.04"), class: "badge bg-warning text-dark" %>
+</div>
 
 <%= render ListGroupLimitVisibleComponent.new(placeholder: "Scrivi parte del nome del nodo") do %>
   <% @nodes.each do |item| %>

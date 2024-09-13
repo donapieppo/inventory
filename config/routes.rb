@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :nodes
   mount DmUniboCommon::Engine => "/dm_unibo_common", :as => "dm_unibo_common"
 
   get "/choose_organization", to: "home#choose_organization"
@@ -19,7 +18,12 @@ Rails.application.routes.draw do
     resources :projects do
       resources :important_dates
     end
-    resources :agreements
+    resources :nodes do
+      get :analysis, on: :collection
+    end
+    resources :agreements do
+      resources :important_dates
+    end
     resources :important_dates
     resources :softwares
     resources :roles do
