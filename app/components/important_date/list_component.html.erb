@@ -4,9 +4,9 @@
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= date.id %>" aria-expanded="false" aria-controls="collapse<%= date.id %>">
-          <strong class="pe-2"><%= I18n.l date.date %></strong>
+          <span class="pe-3"><%= helpers.important_date_icon(date) %></span>
+          <%= I18n.l date.date %>
           <%= date.name %>
-          <%= date.date_type %>
         </button>
       </h2>
       <div id="collapse<%= date.id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= date.id %>" data-bs-parent="#dates_accordion">

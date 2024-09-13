@@ -18,7 +18,18 @@ module ApplicationHelper
     when "unhealthy"
       "warning"
     else
-      ""
+      "success"
+    end
+  end
+
+  def important_date_icon(date)
+    case date.date_type
+    when "alert"
+      dm_icon("triangle-exclamation")
+    when "memorandum"
+      dm_icon("clipboard")
+    else
+      dm_icon("clipboard")
     end
   end
 end

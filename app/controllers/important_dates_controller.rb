@@ -10,13 +10,13 @@ class ImportantDatesController < ApplicationController
   end
 
   def new
-    @what = Project.find(params[:project_id])
+    @what = get_what
     @date = ImportantDate.new
     authorize @date
   end
 
   def create
-    @what = Project.find(params[:project_id])
+    @what = get_what
     @date = @what.important_dates.new(date_params)
     authorize @date
     if @date.save
@@ -45,6 +45,14 @@ class ImportantDatesController < ApplicationController
   end
 
   private
+
+  def get_what
+    if params[:project_id]
+      Project.find(params[:project_id])
+    elsif params[:agreement_id]
+      Agreement.find(params[:agreement_id])
+    end
+  end
 
   def set_date_and_check_authorization
     @date = ImportantDate.find(params[:id])
