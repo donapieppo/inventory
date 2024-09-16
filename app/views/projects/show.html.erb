@@ -42,4 +42,6 @@
   <% end %>
 </div>
 
-<%= render ImportantDate::ListComponent.new(@project.important_dates.order(:date), editable: true, with_new: true, parent: @project) %>
+<div class="d-flex flex-row-reverse text-sm" style="font-size: 80%">
+  <%= render ImportantDate::ListComponent.new(@project.important_dates.order(:date), editable: true, with_new: true, parent: @project) %>
+</div>

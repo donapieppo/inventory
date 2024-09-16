@@ -17,11 +17,12 @@
   <dt>Ruolo</dt>
   <dd><%= link_to @node.role.to_s.upcase, @node.role %></dd>
   <dt>Gruppi Amm</dt>
-  <dd>
-    <% @node.role.ad_groups.each do |adg| %>
+  <% @node.role.ad_groups.each do |adg| %>
+    <dd>
       <%= link_to adg, adg %><br/>
-    <% end %>
-  </dd>
+      <small><%= adg.contacts.sort.join(", ") %></small>
+    </dd>
+  <% end %>
   <dt>Servizi</dt>
   <dd>
     <% @node.node_services.order(:software_id, :port).each do |service| %>

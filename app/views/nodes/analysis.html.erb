@@ -1,13 +1,13 @@
-<h1>Analisi</h1>
+<h1><%= @title %></h1>
 
-<% @versions.each do |version| %>
-  <% next if version.operatingsystem.blank? %>
-  <%= link_to analysis_nodes_path(os: version.operatingsystem, os_version: version.operatingsystemrelease), class: "badge bg-warning text-dark" do %>
-    <%= version.operatingsystem %> - <%= version.operatingsystemrelease %> 
+<div class="my-2">
+  <% @versions.each do |version| %>
+    <% next if version.operatingsystem.blank? %>
+    <%= link_to analysis_nodes_path(os: version.operatingsystem, os_version: version.operatingsystemrelease), class: "badge bg-warning text-dark" do %>
+      <%= version.operatingsystem %> - <%= version.operatingsystemrelease %> 
+    <% end %>
   <% end %>
-<% end %>
-
-<h2 class="my-2"><%= @title %></h2>
+</div>
 
 <% @nodes.each do |item| %>
   <%= link_to item, class: "card text-decoration-none" do %>
@@ -19,8 +19,6 @@
       <dl class="dl-horizontal">
         <dt>Ruolo:</dt>
         <dd><%= item.role.to_s.upcase %></dd>
-        <dt>Gruppi:</dt>
-        <dd><%= item.role.ad_groups.map(&:name).join(", ") %></dd>
         <dt>Siti:</dt>
         <dd>
           <% item.web_sites.each do |ws| %>
@@ -32,6 +30,9 @@
         </dd>
         <dt>Accessi ssh:</dt>
         <dd><%= item.ssh_logins.map(&:user).join(", ") %>&nbsp;</dd>
+        <dt>Gruppi:</dt>
+        <dd><%= item.role.ad_groups.map(&:name).join(", ") %></dd>
+        <dd class="small"><%= item.role.ad_groups.map(&:contacts).sort.join(", ") %></dd>
       </dl>
     </div>
   <% end %>

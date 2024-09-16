@@ -5,4 +5,8 @@ class AdGroup < ApplicationRecord
   def to_s
     name
   end
+
+  def contacts
+    users.map(&:upn)
+  end
 end

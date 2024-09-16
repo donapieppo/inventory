@@ -14,7 +14,7 @@ class NodesController < ApplicationController
     authorize :node
     @versions = Node.select(:operatingsystem, :operatingsystemrelease).order(:operatingsystem, :operatingsystemrelease).distinct
     if params[:os] && params[:os_version]
-      @title = "Sistema operativo: #{params[:os]} versione #{params[:os_version]}"
+      @title = " #{params[:os]} versione #{params[:os_version]}"
       @nodes = Node.includes(:role, :node_ips, ssh_logins: :user).order("roles.name").where("operatingsystem = ? and operatingsystemrelease = ?", params[:os], params[:os_version])
     else
       @nodes = Node.none
