@@ -3,7 +3,7 @@
   <%= link_to_edit("", [:edit, @agreement]) if policy(@agreement).edit? %>
 </h1>
 
-<%= render DlListComponent.new @agreement, [:party, :referent, :referent_contact, :name, :description, :start_date, :end_date] %>
+<%= render DlListComponent.new @agreement, [:party, :referent, :referent_contact, :name, :description, :amount, :start_date, :end_date] %>
 
 <h2>Elenco progetti</h2>
 <div class="my-3">

@@ -14,6 +14,7 @@ it:
         external: Esterno (convenzione)
         name: Titolo
         description: Descrizione
+        amount: Importo
         start_date: Data di inizio
         end_date: Data di fine
       project:
