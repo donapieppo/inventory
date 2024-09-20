@@ -7,6 +7,10 @@
       <% res = @record.send(attr) %>
       <% if res.is_a?(Date) %>
         <%= I18n.l @record.send(attr) %>
+      <% elsif attr == :amount %>
+        <%= @record.amount %>.00 &euro;
+      <% elsif attr == :notes %>
+        <%= raw helpers.markdown(@record.notes) %>
       <% else %>
         <%= @record.send(attr) %>
       <% end %>

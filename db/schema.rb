@@ -85,6 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_02_075357) do
     t.text "referent_contact"
     t.text "name"
     t.text "description"
+    t.text "notes"
     t.date "start_date"
     t.date "end_date"
     t.decimal "amount", precision: 10

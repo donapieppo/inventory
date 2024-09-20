@@ -32,4 +32,10 @@ module ApplicationHelper
       dm_icon("clipboard")
     end
   end
+
+  def markdown(str)
+    if str
+      Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(str)
+    end
+  end
 end

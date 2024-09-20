@@ -50,6 +50,6 @@ class AgreementsController < ApplicationController
   end
 
   def agreement_params
-    params.require(:agreement).permit(:external, :party, :referent, :referent_contact, :name, :description, :amount, :start_date, :end_date, project_ids: [])
+    params.require(:agreement).permit(:external, :party, :referent, :referent_contact, :name, :description, :notes, :amount, :start_date, :end_date, project_ids: [])
   end
 end
