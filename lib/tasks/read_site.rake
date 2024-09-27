@@ -33,7 +33,7 @@ namespace :inventory do
       Node.where.not(id: real_node_ids).each do |node|
         puts "---- DELETE ----"
         p node
-        puts "Can delete?"
+        puts "Can delete? (yes/no)"
         if gets.chomp == "yes"
           node.destroy
         else
