@@ -7,7 +7,7 @@ class AgreementsController < ApplicationController
   end
 
   def show
-    @projects = @agreement.projects.order(:name).includes(:nodes)
+    @projects = @agreement.projects.order(:name).includes(:roles)
   end
 
   def new
