@@ -4,7 +4,7 @@
   <% @web_sites.each do |item| %>
     <%= link_to item, class: "list-group-item list-group-item-actions", data: {"limit-visible-target" => "item", text: item.name, turbo_frame: :modal} do %>
       <%= item.name %>
-      <span class="float-end badge bg-<%= web_site_state_color(item) %>"><%= item.arch_requests + item.new_requests %></span>
+      <span class="float-end badge bg-<%= web_site_state_color(item) %>"><%= item.requests %></span>
     <% end %>
   <% end %>
 <% end %>
