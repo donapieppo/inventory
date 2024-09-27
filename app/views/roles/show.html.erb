@@ -5,7 +5,7 @@
 </h1>
 
 <div class="alert alert-primary">
-  <%= @role.description %>
+  <%= description_to_s(@role.description) %>
 </div>
 
 <div id="role_projects_tab">
@@ -19,7 +19,7 @@
       <% @role.nodes.each do |node| %>
         <%= link_to node, class: "list-group-item list-group-item-action" do %>
           <div><%= node %></div>
-          <div class="text-secondary small ms-3">
+          <div class="text-body-secondary small ms-3">
             <strong>proc:</strong> <%= node.processorcount %> &nbsp;
             <strong>ram:</strong> <%= node.memorysize %> GB &nbsp;
             <strong>dischi:</strong> <%= node.disks %>
