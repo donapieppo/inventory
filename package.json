@@ -3,7 +3,7 @@
   "private": "true",
   "dependencies": {
     "@rails/actiontext": "^7.1.3-4",
-    "dm_unibo_common": "donapieppo/dm_unibo_common.git#master"
+    "dm_unibo_common": "donapieppo/dm_unibo_common.git#css"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
