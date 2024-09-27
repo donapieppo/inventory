@@ -9,9 +9,9 @@
 
 <dl class="dl-horizontal">
   <dt>Progetti</dt>  
-  <dd>
+  <dd class="pb-2">
     <% @node.role.projects.each do |p| %>
-      <%= link_to p.name, p, class: "btn btn-success" %>
+      <%= link_to p.name, p, class: "btn btn-success py-1" %>
     <% end %>
   </dd>
   <dt>Ruolo</dt>
@@ -33,7 +33,7 @@
   <dd>
     <% @node.web_sites.each do |ws| %>
       <div>
-        <%= link_to ws, ws, data: {turbo_frame: :modal}, class: "text-#{web_site_state_color(ws)}" %>
+        <%= link_to ws, ws, data: {turbo_frame: :modal}, class: "" %>
         <span class="ms-2 badge text-dark small bg-success text-white bg-<%= web_site_state_color(ws) %>"><%= ws.requests %></span>
       </div>
     <% end %>
