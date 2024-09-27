@@ -3,11 +3,11 @@ include DmUniboCommonHelper
 module ApplicationHelper
   def project_color(project, user_project)
     if user_project
-      "bg-warning"
+      "bg-secondary"
     elsif project.agreements.any?
-      "bg-info"
+      "bg-warning-subtle"
     else
-      "bg-light"
+      "bg-white"
     end
   end
 
@@ -37,5 +37,9 @@ module ApplicationHelper
     if str
       Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(str)
     end
+  end
+
+  def description_to_s(description)
+    description.blank? ? dm_icon("triangle-exclamation", text: "Descrizione non ancora presente") : description
   end
 end
