@@ -16,6 +16,9 @@
           <% if project.agreements.any? %>
             <span class="float-end">Accordo</span>
           <% end %>
+          <% if my_project %>
+            <span class="float-end"><%= dm_icon(:star) %></span>
+          <% end %>
         </div>
         <div class="card-body bg-white small">
           <%= project.description %>
