@@ -34,8 +34,8 @@
   <% @roles.each do |role| %>
     <%= link_to role, class: "list-group-item" do %>
       <h2><%= role.name %></h2>
-      <div class="text-secondary"><%= role.description %></div>
-      <div class="mt-1 ms-3 text-secondary">
+      <div class=""><%= role.description %></div>
+      <div class="mt-1 ms-3 text-body-secondary">
         <small><%= role.nodes.map(&:name).join(", ") %></small>
       </div>
     <% end %>
