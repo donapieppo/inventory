@@ -1,5 +1,5 @@
-<div class="card text-end">
-  <div class="card-header">
+<div class="card w-full">
+  <div class="card-header fw-bold">
     Promemoria
   </div>
   <div class="card-body">
@@ -14,7 +14,7 @@
             </button>
           </div>
           <div id="collapse<%= date.id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= date.id %>" data-bs-parent="#dates_accordion">
-            <div class="p-2">
+            <div class="p-2 px-4">
               <%= date.description %>
             </div>
             <div class="text-end p-2">
@@ -24,7 +24,7 @@
         </div>
       <% end %>
       <% if @with_new %>
-        <%= link_to "Aggiungi promemoria", [:new, @parent, :important_date], class: "mt-2 btn btn-primary" %>
+        <%= link_to "Aggiungi promemoria", [:new, @parent, :important_date], class: "mt-2 btn btn-primary float-end" %>
       <% end %>
     </div>
   </div>
