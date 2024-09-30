@@ -25,9 +25,7 @@
   <% end %>
   <dt>Servizi</dt>
   <dd>
-    <% @node.node_services.order(:software_id, :port).each do |service| %>
-      <strong><%= service.software %></strong> on port <%= service.port %> <br/>
-    <% end %>
+    <%= render Service::ListComponent.new(@node.node_services) %>
   </dd>
   <dt>Siti web</dt>
   <dd>
