@@ -22,9 +22,12 @@
 
 <div class="alert alert-info">
   <%= @project.description %>
-  <% @project.agreements.each do |agreement| %>
-    <%= link_to agreement do %>
-      <%= agreement %>
+  <% if @project.agreements.any? %>
+    <strong>Accordi:</strong>
+    <% @project.agreements.each do |agreement| %>
+      <%= link_to agreement do %>
+        <%= agreement.typology_name %> <%= agreement.to_s.upcase %> 
+      <% end %>
     <% end %>
   <% end %>
 </div>
