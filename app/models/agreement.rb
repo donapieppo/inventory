@@ -21,4 +21,17 @@ class Agreement < ApplicationRecord
       "accordo"
     end
   end
+
+  def state
+    now = Date.today
+    if now < start_date
+      :unstarted
+    elsif now < end_date - 30.days
+      :active
+    elsif now < end_date
+      :nearend
+    else
+      :ended
+    end
+  end
 end
