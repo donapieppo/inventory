@@ -23,21 +23,22 @@ namespace :inventory do
         end
       end
       user_connections.each do |username, conns|
-        user = User.find_by_sam(username) || AdmUser.find_by_sam(username)
+        user = User.find_by_sam(username) || AdmUser.find_by_sam(username) || User.find_by_upn(username) 
         user = user.user if user.is_a?(AdmUser)
         if user
-          puts "#{username} -> #{user.inspect}"
           conns.each do |node, dates|
-            p node
             ssh_login = SshLogin.find_or_create_by!(user: user, node: node)
             new_dates = dates.select { |d| d > (ssh_login.last_login || 0) }
             if new_dates.any?
+              p node
               ssh_login.update(
                 numbers: ssh_login.numbers + new_dates.count,
                 last_login: new_dates.last
               )
             end
           end
+        else
+          puts "MISSING #{username}"
         end
       end
     end
