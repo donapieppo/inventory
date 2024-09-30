@@ -5,29 +5,16 @@
 
 <%= dm_card title: @agreement.name do %>
   <%= render DlListComponent.new @agreement, [:party, :referent, :referent_contact, :description, :amount, :start_date, :end_date, :description, :notes] %>
+  <dl class="dl-horizontal">
+    <dt>Progetti</dt>
+    <% @projects.each do |project| %>
+      <dd>
+        <strong><%= link_to project %></strong><small><%= project.description %></small>
+      </dd>
+    <% end %>
+  </dl>
 <% end %>
 
-<h2>Elenco progetti</h2>
-<div class="my-3">
-  <% @projects.each do |project| %>
-    <h3><%= project.name %></h3>
-    <div class="text-body-secondary">
-      <%= description_to_s(project.description) %>
-    </div>
-    <div class="mt-1 ms-3 list-group text-body-secondary">
-      <% project.roles.includes(:nodes).each do |role| %>
-        <%= link_to role, class: "list-group-item" do %>
-          <h2><%= role.name %></h2>
-          <div class="text-body-secondary"><%= role.description %></div>
-          <div class="mt-1 ms-3 text-body-secondary">
-            <small><%= role.nodes.map(&:name).join(", ") %></small>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  <% end %>
-</div>
-
-<div class="d-flex flex-row-reverse text-sm" style="font-size: 80%">
+<div class="text-sm">
   <%= render ImportantDate::ListComponent.new(@agreement.important_dates.order(:date), editable: true, with_new: true, parent: @agreement) %>
 </div>
