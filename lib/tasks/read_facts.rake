@@ -22,7 +22,7 @@ namespace :inventory do
       # Node.where("name like '%hpc%' or name like '%ondema%'").each do |node|
       # Node.where("kernelversion is NULL").each do |node|
       Node.find_each do |node|
-        p node
+        puts node.name
         http = Net::HTTP.new(uri.host, uri.port)
         request = Net::HTTP::Post.new(uri.path, headers)
 
@@ -69,8 +69,7 @@ namespace :inventory do
         if facts.key?("cesia_services") && facts["cesia_services"].is_a?(Hash)
           # { "sshd": [22], "postgres": [5432], .... }
           facts["cesia_services"].each do |service, ports|
-            p service
-
+            # p service
             # if (software = Software.find_by(name: service))
             if (software = Software.find_or_create_by(name: Software.clear_service_name(service)))
               ports.each do |port|
