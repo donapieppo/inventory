@@ -30,4 +30,10 @@ class Role < ApplicationRecord
       File.read(yaml_file)
     end
   end
+
+  def contacts_no_cesia
+    role.ad_groups.to_a.select { |ad| ad.name != "amm.sistemi" }.each_with_object([]) do |ad_group, res|
+      res << ad_group.contacts
+    end.flatten.uniq
+  end
 end
