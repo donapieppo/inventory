@@ -21,10 +21,13 @@ namespace :inventory do
           p role_match
           r = Role.find_or_create_by!(os: role_match[2], name: role_match[1])
           p r
+          # node only one role
           node_names.each do |node|
             node_name = node.delete("'").delete('"').strip
             p node_name
-            node = Node.find_or_create_by!(role_id: r.id, name: node_name)
+            node = Node.find_or_initialize_by(name: node_name)
+            node.role_id = r.id
+            node.save!
             real_node_ids << node.id
           end
         end
