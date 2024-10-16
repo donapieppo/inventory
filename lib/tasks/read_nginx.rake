@@ -11,7 +11,7 @@ def parse_upstreams(url)
 
   response = http.request(request)
   JSON.parse(response.body).each do |site_name, conf|
-    p site_name
+    puts site_name
 
     state = "up"
     requests = 0

@@ -111,8 +111,7 @@ namespace :inventory do
             ).find_or_create_by!(upn: upn)
           end
         end
-        sleep 1
-        gets
+        sleep 2
       end
 
       fix_adm_users(ldap)
