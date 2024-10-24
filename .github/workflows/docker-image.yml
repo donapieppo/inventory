@@ -1,0 +1,13 @@
+name: Docker Inventory Image CI
+
+on:
+  push:
+    tags: [ "*" ]
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag inventory:${{ github.ref_name }} --tag inventory:latest
