@@ -1,9 +1,9 @@
 # syntax = docker/dockerfile:1
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
-ARG RUBY_VERSION=3.2.2
+ARG RUBY_VERSION=3.3.5
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim AS base
-MAINTAINER Donapieppo <donapieppo@yahoo.it>
+LABEL org.opencontainers.image.authors="Donapieppo <donapieppo@yahoo.it>"
 
 # Rails app lives here
 WORKDIR /rails
@@ -63,9 +63,10 @@ COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
+RUN groupadd --system --gid 1000 rails && \
+    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
-USER rails:rails
+USER 1000:1000
 
 # Entrypoint prepares the database.
 # donatini
