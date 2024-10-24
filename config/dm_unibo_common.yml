@@ -1,0 +1,11 @@
+development:
+  omniauth_provider:   :developer
+  searchable_provider: true
+  host:                development.yourdomain.com
+  smtp_unibo:          true
+  support_mail:        supportoweb@yourdomain.com
+  logout_link:         https://idptest.unibo.it/adfs/ls/?wa=wsignout1.0
+  login_icon:          dm_unibo_common/ssologo18x18.png
+  logout_icon:         dm_unibo_common/ssologo18x18.png
+  default_current_organization: cesia
+
